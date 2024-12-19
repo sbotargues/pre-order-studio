@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  padding: 1rem 2rem;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  align-content: center;
+
+  p {
+    font-size: 1rem;
+    font-weight: 500;
+    font-style: italic;
+  }
+}

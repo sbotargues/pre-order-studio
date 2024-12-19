@@ -1,0 +1,68 @@
+@import "./variables";
+@import "./fonts";
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: $font-family-primary;
+  font-size: $font-size-base;
+  color: $color-text;
+  background-color: $color-background;
+  line-height: 1.6;
+  font-family: 'Akzidenz Grotesk Pro', sans-serif;
+}
+
+p {
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: -0.04em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  font-weight: 400;
+}
+
+a {
+  font-family: "Akzidenz Grotesk Pro", sans-serif;
+  color: $color-link;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+h1 {
+  font-family: "Akzidenz Grotesk Pro", sans-serif;
+  font-weight: 700;
+}
+
+button {
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+  padding: $spacing-small $spacing-medium;
+  border: none;
+  border-radius: $border-radius;
+  background-color: $color-primary;
+  color: white;
+
+  &:hover {
+    background-color: darken($color-primary, 10%);
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

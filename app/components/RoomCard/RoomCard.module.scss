@@ -1,0 +1,123 @@
+.roomCard {
+  display: flex;
+  justify-content: center;
+  border-radius: 16px;
+}
+
+.card {
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  width: 95vw; /* Consolidado */
+  padding: 1rem; /* Consolidado */
+}
+
+.card.collapsed {
+  border-radius: 16px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card.expanded {
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.cardHeader.left {
+  justify-content: flex-start; /* Imagen a la izquierda */
+}
+
+.cardHeader.center {
+  justify-content: center; /* Imagen centrada */
+}
+
+.cardHeader.right {
+  justify-content: flex-end; /* Imagen a la derecha */
+}
+
+.cardHeader h1 {
+  font-size: 2rem;
+}
+
+.cardHeader .italic {
+  font-style: italic;
+  font-family: "KUNSTLER", serif;
+}
+
+.cardDetails {
+  margin-top: 1rem;
+}
+
+.dateTime {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.datepicker,
+.timepicker {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: center;
+  background-color: #fff; /* Consolidado */
+}
+
+.datepicker {
+  width: 120px;
+}
+
+.timepicker {
+  width: 80px;
+}
+
+.guests {
+  margin-top: 1rem;
+}
+
+.guests label {
+  font-size: 0.9rem;
+}
+
+.guestsInput {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.roomImage {
+  border-radius: 8px;
+}
+
+.plus {
+  cursor: pointer;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}

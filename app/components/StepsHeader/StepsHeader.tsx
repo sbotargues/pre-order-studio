@@ -13,7 +13,7 @@ const StepsHeader: React.FC<StepsHeaderProps> = ({
   currentStep,
   selectedRoom,
 }) => {
-  const progressMapping = [10, 50, 75, 100];
+  const progressMapping = [10, 50, 60, 75, 100];
   const progressPercentage = progressMapping[currentStep];
 
   const studies = [

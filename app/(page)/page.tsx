@@ -8,18 +8,22 @@ import RoomCard from "../components/RoomCard/RoomCard";
 import { roomConfigurations } from "../constants/roomConfig";
 import { useRoomState, useRoomDispatch } from "../context/RoomProvider";
 import { Rooms } from "../types/types";
+import TargetCard from "../components/SecondaryCards/TargetCard/TargetCard";
+import LightCard from "../components/SecondaryCards/LightCard/LightCard";
 
 const IndexPage = () => {
   const { selectedRoom, isRoomCollapsed, currentStep } = useRoomState();
   const { selectRoom, setRoomCollapsed, setCurrentStep } = useRoomDispatch();
 
   useEffect(() => {
-    if (isRoomCollapsed) {
+    if (selectedRoom) {
+      setRoomCollapsed(true);
       setCurrentStep(1);
     } else {
+      setRoomCollapsed(false);
       setCurrentStep(0);
     }
-  }, [isRoomCollapsed, setCurrentStep]);
+  }, [selectedRoom, setRoomCollapsed, setCurrentStep]);
 
   const handlePlusClick = (room: Rooms) => {
     if (selectedRoom === room) {
@@ -29,6 +33,17 @@ const IndexPage = () => {
       selectRoom(room);
       setRoomCollapsed(true);
     }
+  };
+
+  console.log("currentStep", currentStep);
+
+  const renderStep = () => {
+    return (
+      <>
+        <TargetCard isCollapsed={currentStep <= 2} />
+        <LightCard isCollapsed={currentStep !== 2} />
+      </>
+    );
   };
 
   return (
@@ -50,6 +65,9 @@ const IndexPage = () => {
           );
         })}
       </div>
+      {isRoomCollapsed && (
+        <div className={styles.stepsContainer}>{renderStep()}</div>
+      )}
     </div>
   );
 };

@@ -1,31 +1,31 @@
-import { RoomColors, Rooms } from "@/app/types/types";
+import { Position, RoomColors, Rooms } from "@/app/types/types";
 
 export const roomConfigurations = {
   [Rooms.ONECSTUDIO]: {
     image: "/images/1c-portada.png",
     backgroundColor: RoomColors.ONECSTUDIO,
-    position: "center",
+    position: Position.CENTER,
     imageWidth: 210,
     imageHeight: 210,
   },
   [Rooms.CUBESTUDIO]: {
     image: "/images/cube-portada.png",
     backgroundColor: RoomColors.CUBESTUDIO,
-    position: "right",
+    position: Position.RIGHT,
     imageWidth: 175,
     imageHeight: 175,
   },
   [Rooms.FOURDSTUDIO]: {
     image: "/images/4d-portada.png",
     backgroundColor: RoomColors.FOURDSTUDIO,
-    position: "left",
+    position: Position.LEFT,
     imageWidth: 240,
     imageHeight: 240,
   },
   [Rooms.HOMESTUDIO]: {
     image: "/images/home-portada.png",
     backgroundColor: RoomColors.HOMESTUDIO,
-    position: "center",
+    position: Position.CENTER,
     imageWidth: 200,
     imageHeight: 200,
   },

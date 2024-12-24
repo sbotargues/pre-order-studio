@@ -11,3 +11,9 @@ export const enum RoomColors {
   CUBESTUDIO = "#039E73",
   HOMESTUDIO = "#E95942",
 }
+
+export const enum Position {
+  CENTER = "center",
+  LEFT = "left",
+  RIGHT = "right",
+}

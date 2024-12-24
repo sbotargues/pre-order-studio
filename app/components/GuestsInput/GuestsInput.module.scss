@@ -1,0 +1,64 @@
+.guests {
+  margin-top: 1rem;
+  font-family: "Akzidenz Grotesk Pro", sans-serif;
+  font-weight: 300;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  label {
+    font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
+    font-size: 15px;
+  }
+}
+
+.guestsInput {
+  padding: 2px 10px;
+  border: none;
+  border-radius: 50px;
+  font-size: 17px;
+  font-weight: 400;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f5efe2;
+  display: inline-block;
+
+  /* Ajuste dinámico del ancho basado en el contenido */
+  width: auto;
+  min-width: fit-content;
+  max-width: 100%; /* Asegura que no crezca indefinidamente */
+  white-space: nowrap; /* Evita que el texto se corte en líneas */
+}
+
+.popover {
+  position: absolute;
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.scrollList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  text-align: center;
+}
+
+.scrollItem {
+  padding: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: center;
+}
+
+.scrollItem:hover,
+.selected {
+  background-color: #f79926;
+  color: #fff;
+  font-weight: bold;
+}

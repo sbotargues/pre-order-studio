@@ -13,12 +13,14 @@ interface RoomState {
   selectedRoom: Rooms | null;
   isRoomCollapsed: boolean;
   currentStep: number;
+  formData: Record<string, any>; // Datos acumulados del formulario
 }
 
 interface RoomDispatch {
   selectRoom: (room: Rooms | null) => void;
   setRoomCollapsed: (collapsed: boolean) => void;
   setCurrentStep: (step: number) => void;
+  updateFormData: (field: string, value: any) => void;
 }
 
 const RoomStateContext = createContext<RoomState | undefined>(undefined);
@@ -32,10 +34,11 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
   const [selectedRoom, setSelectedRoom] = useState<Rooms | null>(null);
   const [isRoomCollapsed, setRoomCollapsed] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
+  const [formData, setFormData] = useState<Record<string, any>>({});
 
   const state = useMemo(
-    () => ({ selectedRoom, isRoomCollapsed, currentStep }),
-    [selectedRoom, isRoomCollapsed, currentStep]
+    () => ({ selectedRoom, isRoomCollapsed, currentStep, formData }),
+    [selectedRoom, isRoomCollapsed, currentStep, formData]
   );
 
   const dispatch = useMemo(
@@ -43,6 +46,8 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
       selectRoom: (room: Rooms | null) => setSelectedRoom(room),
       setRoomCollapsed: (collapsed: boolean) => setRoomCollapsed(collapsed),
       setCurrentStep: (step: number) => setCurrentStep(step),
+      updateFormData: (field: string, value: any) =>
+        setFormData((prev) => ({ ...prev, [field]: value })),
     }),
     []
   );

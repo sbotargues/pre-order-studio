@@ -1,0 +1,129 @@
+@import "../../../styles/variables";
+
+.card {
+  background-color: $color-background;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 90%;
+  text-align: left;
+
+  &.collapsed {
+    padding: 10px;
+    text-align: left;
+    cursor: pointer;
+
+    .subtitle,
+    .options {
+      display: none;
+    }
+  }
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .title {
+    font-size: $font-size-large;
+    font-weight: 600;
+    color: $color-text;
+    margin-bottom: 0;
+  }
+
+  .toggleButton {
+    background: none;
+    border: none;
+    font-size: $font-size-large;
+    color: $orange-corporate;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: darken($orange-corporate, 10%);
+    }
+  }
+}
+
+.subtitle {
+  font-size: $font-size-small;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .includeButton {
+    background: none;
+    border: none;
+    font-size: $font-size-small;
+    color: $orange-corporate;
+    cursor: pointer;
+    text-decoration: underline;
+    padding: 0;
+
+    &:hover {
+      color: darken($orange-corporate, 10%);
+    }
+  }
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .option {
+    background-color: $color-background-2;
+    border-radius: 8px;
+    padding: 15px;
+    transition: all 0.3s ease;
+
+    &.selected {
+      background-color: lighten($orange-corporate, 40%);
+      border: 1px solid $orange-corporate;
+    }
+
+    .optionHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+
+      .optionTitle {
+        font-weight: 500;
+        color: $color-text;
+      }
+
+      .optionPrice {
+        font-size: $font-size-small;
+        font-weight: 400;
+      }
+
+      .toggleSwitch {
+        margin-left: 10px;
+        appearance: none;
+        width: 20px;
+        height: 20px;
+        background-color: $color-background;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+
+        &:checked {
+          background-color: $orange-corporate;
+        }
+      }
+    }
+
+    .details {
+      margin-top: 10px;
+      padding-left: 20px;
+      font-size: $font-size-small;
+
+      li {
+        margin-bottom: 5px;
+      }
+    }
+  }
+}

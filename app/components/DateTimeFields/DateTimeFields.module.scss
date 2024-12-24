@@ -1,0 +1,29 @@
+.dateTime {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+
+  label {
+    font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
+    font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 15px;
+  }
+}
+
+.inputGroup {
+  display: flex;
+  gap: 8px;
+}

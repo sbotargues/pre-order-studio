@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./styles/_globals.scss";
 import { RoomProvider } from "./context/RoomProvider";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Myfuckingstudio PRE-ORDER",

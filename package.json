@@ -14,9 +14,12 @@
     "@capacitor/cli": "^6.1.2",
     "@capacitor/core": "^6.1.2",
     "@capacitor/ios": "^6.1.2",
+    "date-fns": "^4.1.0",
     "next": "15.0.3",
     "react": "19.0.0-rc-66855b96-20241106",
+    "react-datepicker": "^7.5.0",
     "react-dom": "19.0.0-rc-66855b96-20241106",
+    "react-time-picker": "^7.0.0",
     "sass": "^1.82.0"
   },
   "devDependencies": {

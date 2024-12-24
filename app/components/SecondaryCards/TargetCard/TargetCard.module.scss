@@ -1,0 +1,134 @@
+@import "../../../styles/variables";
+
+.card {
+  background-color: white;
+  border-radius: 24px;
+  margin: 20px auto;
+  width: 95vw;
+  text-align: center;
+  text-align: left;
+
+  &.collapsed {
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
+  &.uncollapsed {
+    border: 1px solid #e2d5b9;
+    padding-block-end: 14px;
+  }
+}
+
+.headerRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 25px;
+  padding-block: 10px;
+
+  h3 {
+    font-size: 15px;
+    font-weight: 500;
+    color: $color-text;
+    flex-grow: 1;
+    text-align: flex-start;
+  }
+
+  .backButton {
+    background: none;
+    border: none;
+    color: $color-text;
+    font-size: $font-size-large;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $orange-corporate;
+    }
+  }
+
+  .toggleButton {
+    background: none;
+    border: none;
+    font-size: $font-size-large;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $orange-corporate;
+    }
+  }
+}
+
+.line {
+  color: red;
+}
+
+.clientTypeStep,
+.clientFormStep {
+  padding-inline: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-size: 12px;
+
+  .clientTypeItem {
+    font-weight: 300;
+  }
+
+  h3 {
+    font-size: $font-size-large;
+    font-weight: 500;
+    color: $color-text;
+  }
+}
+
+.linea {
+  background-color: #e2d5b9;
+  height: 1px;
+  margin-block: 3px;
+}
+
+.clientForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+
+  input {
+    width: 100%;
+    padding: 10px;
+    font-size: $font-size-small;
+    border: 1px solid black;
+    border-radius: 8px;
+    outline: none;
+    transition: border-color 0.3s ease;
+
+    &:focus {
+      border-color: $orange-corporate;
+    }
+  }
+}
+
+.infoText {
+  font-size: $font-size-small;
+  color: $color-text;
+  text-align: left;
+}
+
+.continueButton {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background-color: $orange-corporate;
+  color: white;
+  // font-size: $font-size-medium;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: darken($orange-corporate, 10%);
+  }
+}

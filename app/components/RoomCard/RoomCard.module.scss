@@ -1,16 +1,17 @@
 .roomCard {
   display: flex;
   justify-content: center;
-  border-radius: 16px;
+  border-radius: 24px;
+  padding-bottom: 10px;
+  font-family: "Akzidenz Grotesk Pro", sans-serif;
 }
 
 .card {
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: visible;
   transition: all 0.3s ease-in-out;
   position: relative;
-  width: 95vw; /* Consolidado */
-  padding: 1rem; /* Consolidado */
+  width: 95vw;
+  padding: 1rem;
 }
 
 .card.collapsed {
@@ -29,90 +30,37 @@
   align-items: center;
 }
 
-.cardHeader {
+.cardHeader,
+.upHeader {
   display: flex;
   align-items: center;
   width: 100%;
+  z-index: 2;
 }
 
-.cardHeader.left {
-  justify-content: flex-start; /* Imagen a la izquierda */
+.cardHeader.left,
+.upHeader.left {
+  justify-content: flex-start;
 }
 
-.cardHeader.center {
-  justify-content: center; /* Imagen centrada */
+.cardHeader.center,
+.upHeader.center {
+  justify-content: center;
 }
 
-.cardHeader.right {
-  justify-content: flex-end; /* Imagen a la derecha */
+.cardHeader.right,
+.upHeader.right {
+  justify-content: flex-end;
 }
 
-.cardHeader h1 {
-  font-size: 2rem;
-}
+.upHeader {
+  margin: 30px 0;
 
-.cardHeader .italic {
-  font-style: italic;
-  font-family: "KUNSTLER", serif;
-}
-
-.cardDetails {
-  margin-top: 1rem;
-}
-
-.dateTime {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-.inputGroup {
-  display: flex;
-  gap: 0.5rem;
-}
-
-.datepicker,
-.timepicker {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  text-align: center;
-  background-color: #fff; /* Consolidado */
-}
-
-.datepicker {
-  width: 120px;
-}
-
-.timepicker {
-  width: 80px;
-}
-
-.guests {
-  margin-top: 1rem;
-}
-
-.guests label {
-  font-size: 0.9rem;
-}
-
-.guestsInput {
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  text-align: center;
-}
-
-.roomImage {
-  border-radius: 8px;
+  .image {
+    margin-top: -80px;
+    z-index: 3;
+    position: relative;
+  }
 }
 
 .plus {
@@ -120,4 +68,8 @@
   position: absolute;
   top: 15px;
   right: 15px;
+}
+
+.cardDetails {
+  width: 100%;
 }

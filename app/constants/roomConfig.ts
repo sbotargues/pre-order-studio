@@ -5,8 +5,8 @@ export const roomConfigurations = {
     image: "/images/1c-portada.png",
     backgroundColor: RoomColors.ONECSTUDIO,
     position: Position.CENTER,
-    imageWidth: 210,
-    imageHeight: 210,
+    imageWidth: 225,
+    imageHeight: 225,
   },
   [Rooms.CUBESTUDIO]: {
     image: "/images/cube-portada.png",

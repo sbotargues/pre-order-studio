@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./DatePickerField.module.scss";
+import Image from "next/image";
 
 export enum MONTHS {
   ENERO = "ENE",
@@ -18,6 +19,22 @@ export enum MONTHS {
   NOVIEMBRE = "NOV",
   DICIEMBRE = "DIC",
 }
+
+// Lista de nombres completos de los meses
+const MONTH_NAMES = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
 
 interface DatePickerFieldProps {
   selectedDate: Date;
@@ -43,8 +60,6 @@ const DatePickerField = ({
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 50 }, (_, i) => currentYear + i);
-
-  const months = Object.values(MONTHS);
 
   const daysInMonth = (year: number, month: number) =>
     new Date(year, month + 1, 0).getDate();
@@ -172,20 +187,16 @@ const DatePickerField = ({
 
     const { left, width } = roomCardRef.current.getBoundingClientRect();
 
-    const triangle = (
-      <div
-        className={styles.triangle}
-        style={{
-          top: bottom + window.scrollY,
-          left: leftButton + widthButton / 2,
-          transform: "translateX(-50%)",
-        }}
-      />
-    );
-
     return createPortal(
       <>
-        {triangle}{" "}
+        <div
+          className={styles.triangle}
+          style={{
+            top: bottom + window.scrollY,
+            left: leftButton + widthButton / 2,
+            transform: "translateX(-50%)",
+          }}
+        />
         <div
           ref={calendarRef}
           className={styles.datePickerPopover}
@@ -201,9 +212,15 @@ const DatePickerField = ({
               onClick={toggleMonthPopover}
               ref={monthButtonRef}
             >
-              {months[selectedDate.getMonth()]}
+              {MONTH_NAMES[selectedDate.getMonth()]}
             </div>
-            <span className={styles.separator}>→</span>
+            <Image
+              src="/icons/arrow.png"
+              alt="down"
+              width={13}
+              height={13}
+              className={styles.arrow}
+            />
             <div
               className={styles.headerButton}
               onClick={toggleYearPopover}
@@ -212,11 +229,12 @@ const DatePickerField = ({
               {selectedDate.getFullYear()}
             </div>
           </div>
+          <div className={styles.separator}></div>
 
           {isMonthPopoverOpen && (
             <div ref={monthPopoverRef} className={styles.popover}>
               <ul className={styles.scrollList}>
-                {months.map((month, index) => (
+                {MONTH_NAMES.map((month, index) => (
                   <li
                     key={month}
                     className={`${styles.scrollItem} ${

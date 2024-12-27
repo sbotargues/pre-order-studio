@@ -17,7 +17,10 @@ const TimePickerField = ({
   const timePickerRef = useRef<HTMLInputElement | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
 
-  const openTimePicker = () => setIsTimePickerOpen(true);
+  const toggleOpenTimePicker = () => {
+    setIsTimePickerOpen((prev) => !prev);
+  };
+
   const closeTimePicker = () => setIsTimePickerOpen(false);
 
   const [currentHour, currentMinute] = selectedTime.split(":");
@@ -42,52 +45,61 @@ const TimePickerField = ({
       timePickerRef.current.getBoundingClientRect();
 
     return createPortal(
-      <div
-        ref={popoverRef}
-        className={styles.timePickerPopover}
-        style={{
-          top: bottom + window.scrollY + 5,
-          left: left + window.scrollX,
-          minWidth: width,
-        }}
-      >
-        <div className={styles.scrollContainer}>
-          <ul className={styles.scrollList}>
-            {hours.map((hour) => (
-              <li
-                key={hour}
-                className={`${styles.scrollItem} ${
-                  hour === currentHour ? styles.selected : ""
-                }`}
-                onClick={() => selectTime(hour, null)}
-              >
-                {hour}
-              </li>
-            ))}
-          </ul>
+      <>
+        <div
+          className={styles.triangle}
+          style={{
+            top: bottom + window.scrollY,
+            left: left + width / 2 + window.scrollX,
+            transform: "translateX(-50%)",
+          }}
+        />
+        <div
+          ref={popoverRef}
+          className={styles.timePickerPopover}
+          style={{
+            top: bottom + window.scrollY + 10,
+            left: left + window.scrollX - 55,
+            minWidth: width,
+          }}
+        >
+          <div className={styles.scrollContainer}>
+            <ul className={styles.scrollList}>
+              {hours.map((hour) => (
+                <li
+                  key={hour}
+                  className={`${styles.scrollItem} ${
+                    hour === currentHour ? styles.selected : ""
+                  }`}
+                  onClick={() => selectTime(hour, null)}
+                >
+                  {hour}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <span className={styles.separator}>:</span>
+          <div className={styles.scrollContainer}>
+            <ul className={styles.scrollList}>
+              {minutes.map((minute) => (
+                <li
+                  key={minute}
+                  className={`${styles.scrollItem} ${
+                    minute === currentMinute ? styles.selected : ""
+                  }`}
+                  onClick={() => selectTime(null, minute)}
+                >
+                  {minute}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        <span className={styles.separator}>:</span>
-        <div className={styles.scrollContainer}>
-          <ul className={styles.scrollList}>
-            {minutes.map((minute) => (
-              <li
-                key={minute}
-                className={`${styles.scrollItem} ${
-                  minute === currentMinute ? styles.selected : ""
-                }`}
-                onClick={() => selectTime(null, minute)}
-              >
-                {minute}
-              </li>
-            ))}
-          </ul>
-        </div>
-      </div>,
+      </>,
       document.body
     );
   };
 
-  // Cierra el popover al hacer clic fuera
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -117,7 +129,7 @@ const TimePickerField = ({
         readOnly
         className={styles.timepicker}
         ref={timePickerRef}
-        onClick={openTimePicker}
+        onClick={toggleOpenTimePicker}
       />
       {isTimePickerOpen && renderPopover()}
     </>

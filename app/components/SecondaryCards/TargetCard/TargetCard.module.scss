@@ -1,9 +1,10 @@
 @import "../../../styles/variables";
 
 .card {
+  font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
   background-color: white;
   border-radius: 24px;
-  margin: 20px auto;
+  margin: 10px auto;
   width: 95vw;
   text-align: center;
   text-align: left;
@@ -26,7 +27,12 @@
   padding-inline: 25px;
   padding-block: 10px;
 
+  img {
+    max-width: 100%;
+  }
+
   h3 {
+    text-transform: uppercase;
     font-size: 15px;
     font-weight: 500;
     color: $color-text;
@@ -36,15 +42,8 @@
 
   .backButton {
     background: none;
-    border: none;
-    color: $color-text;
-    font-size: $font-size-large;
-    cursor: pointer;
-    transition: color 0.3s ease;
-
-    &:hover {
-      color: $orange-corporate;
-    }
+    transform: rotate(-90deg);
+    margin-inline-end: 20px;
   }
 
   .toggleButton {
@@ -67,6 +66,7 @@
 .clientTypeStep,
 .clientFormStep {
   padding-inline: 25px;
+  padding-block-start: 4px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -86,27 +86,55 @@
 .linea {
   background-color: #e2d5b9;
   height: 1px;
-  margin-block: 3px;
+  margin-block: 4px;
 }
 
 .clientForm {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 25px;
+  padding-block-start: 10px;
+
+  p {
+    font-size: 7px;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 9px;
+    margin-block: -4px;
+    word-spacing: 2px;
+  }
 
   input {
     width: 100%;
-    padding: 10px;
-    font-size: $font-size-small;
-    border: 1px solid black;
-    border-radius: 8px;
+    padding: 4px 14px;
+    font-size: 12px;
+    font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
+    font-weight: 300;
+    color: $color-text;
+    border: 1px solid #e2d5b9;
+    border-radius: 50px;
     outline: none;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+
+    &::placeholder {
+      color: rgb(94, 93, 93);
+      font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
+      font-weight: 300;
+    }
+
+    &:hover {
+      border-color: #e2d5b9;
+    }
 
     &:focus {
-      border-color: $orange-corporate;
+      border-color: #e2d5b9;
+      background-color: #fefcf9;
     }
   }
+}
+
+.promoCodeInput{
+  font-style: italic;
 }
 
 .infoText {
@@ -123,6 +151,7 @@
   color: white;
   // font-size: $font-size-medium;
   font-weight: 500;
+  text-transform: uppercase;
   border: none;
   border-radius: 8px;
   cursor: pointer;

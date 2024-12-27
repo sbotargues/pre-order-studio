@@ -1,0 +1,92 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .itemCard {
+    font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
+    background-color: #f5efe2;
+    margin-block-start: 30px;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    aspect-ratio: 1;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
+  }
+
+  .separator {
+    width: 100%;
+    height: 1px;
+    background-color: #e2d5b9;
+    position: absolute;
+    bottom: 0;
+    width: 70%;
+    margin-block-end: 25px;
+  }
+
+  .image {
+    object-fit: contain;
+    width: 90%;
+    position: absolute;
+    margin-block: -40px 0;
+    margin-inline: 0 -42px;
+  }
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .toggleWrapper {
+    bottom: 0;
+    left: 0;
+    margin-block-end: 30px;
+    margin-inline-start: 20px;
+    position: absolute;
+  }
+
+  .title {
+    font-size: 9px;
+    font-weight: 300;
+    text-align: center;
+    color: #000;
+    margin-top: 8px;
+    bottom: 0;
+    position: absolute;
+  }
+
+  .detailTitle {
+    font-size: 9px;
+    font-style: italic;
+    font-weight: 500;
+    color: #000;
+    margin-top: 8px;
+    bottom: 0;
+    list-style: none;
+    line-height: 1.35;
+  }
+
+  .detailDescription {
+    line-height: 1.35;
+    font-size: 9px;
+    font-style: italic;
+    list-style: none;
+    font-weight: 300;
+    color: #000;
+    margin-top: 8px;
+    bottom: 0;
+    list-style: none;
+
+    .bold {
+      font-weight: bold;
+    }
+  }
+}

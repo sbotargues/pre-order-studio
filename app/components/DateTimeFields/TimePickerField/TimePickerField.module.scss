@@ -8,24 +8,38 @@
   text-align: center;
   cursor: pointer;
   background-color: #f5efe2;
+
+  &:hover,
+  &:focus {
+    outline: none;
+  }
 }
 
 .timePickerPopover {
   position: absolute;
   z-index: 1000;
   background: #fff;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 0.5rem;
+  border-radius: 24px;
+  padding: 1rem;
   display: flex;
-  gap: 0.5rem;
-  top: calc(100% + 5px);
-  left: 0;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #e2d5b9;
+}
+
+.triangle {
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-bottom: 11px solid white;
+  z-index: 1001;
 }
 
 .scrollContainer {
-  max-height: 200px;
+  max-height: 120px;
   overflow-y: auto;
 }
 
@@ -45,11 +59,12 @@
 .scrollItem:hover,
 .selected {
   background-color: #f79926;
-  color: #fff;
+  color: black;
+  border-radius: 8px;
 }
 
 .separator {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #000;
+  color: black;
 }

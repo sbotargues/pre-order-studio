@@ -63,7 +63,7 @@ const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
           {isCollapsed && (
             <Image
               onClick={handlePlusClick}
-              src="/images/+.png"
+              src="/icons/+.png"
               alt="+"
               width={18}
               height={18}

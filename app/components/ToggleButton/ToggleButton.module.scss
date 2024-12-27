@@ -1,0 +1,36 @@
+.toggleButton {
+  width: 44px;
+  height: 25px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  padding: 2px;
+
+  &.on {
+    background-color: #f79926; // Naranja activado
+    justify-content: flex-end;
+
+    .toggleCircle {
+      background-color: #000; // Negro
+    }
+  }
+
+  &.off {
+    background-color: white; // Fondo desactivado
+    justify-content: flex-start;
+
+    .toggleCircle {
+      background-color: #000; // Negro
+    }
+  }
+}
+
+.toggleCircle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #000; // Negro por defecto
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}

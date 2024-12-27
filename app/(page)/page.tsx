@@ -9,7 +9,7 @@ import { roomConfigurations } from "../constants/roomConfig";
 import { useRoomState, useRoomDispatch } from "../context/RoomProvider";
 import { Rooms } from "../types/types";
 import TargetCard from "../components/SecondaryCards/TargetCard/TargetCard";
-import LightCard from "../components/SecondaryCards/LightCard/LightCard";
+import AssetsCards from "../components/SecondaryCards/AssetsCards/AssetsCards";
 
 const IndexPage = () => {
   const { selectedRoom, isRoomCollapsed, currentStep } = useRoomState();
@@ -35,13 +35,11 @@ const IndexPage = () => {
     }
   };
 
-  console.log("currentStep", currentStep);
-
   const renderStep = () => {
     return (
       <>
         <TargetCard isCollapsed={currentStep <= 2} />
-        <LightCard isCollapsed={currentStep !== 2} />
+        <AssetsCards isCollapsed={currentStep !== 2} />
       </>
     );
   };
@@ -65,9 +63,7 @@ const IndexPage = () => {
           );
         })}
       </div>
-      {isRoomCollapsed && (
-        <div className={styles.stepsContainer}>{renderStep()}</div>
-      )}
+      {isRoomCollapsed && <>{renderStep()}</>}
     </div>
   );
 };

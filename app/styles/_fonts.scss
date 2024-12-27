@@ -141,3 +141,30 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Akzidenz Grotesk Pro Exp";
+  src: url("/fonts/AkzidenzGroteskPro-MdEx.woff2") format("woff2"),
+    url("/fonts/AkzidenzGroteskPro-MdEx.woff") format("woff"),
+    url("/fonts/AkzidenzGroteskPro-MdEx.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Akzidenz Grotesk Pro Exp";
+  src: url("/fonts/AkzidenzGroteskPro-LigExtIt.woff2") format("woff2"),
+    url("/fonts/AkzidenzGroteskPro-LigExtIt.woff") format("woff"),
+    url("/fonts/AkzidenzGroteskPro-LigExtIt.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Akzidenz Grotesk Pro Exp";
+  src: url("/fonts/AkzidenzGroteskPro-ExtItalic.woff2") format("woff2"),
+    url("/fonts/AkzidenzGroteskPro-ExtItalic.woff") format("woff"),
+    url("/fonts/AkzidenzGroteskPro-ExtItalic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}
+

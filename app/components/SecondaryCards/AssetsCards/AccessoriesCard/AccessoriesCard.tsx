@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import styles from "./LightCard.module.scss";
+import styles from "./AccessoriesCard.module.scss";
+import Image from "next/image";
 
 interface LightOption {
   title: string;
@@ -11,7 +12,7 @@ interface LightOption {
   isSelected: boolean;
 }
 
-interface LightCardProps {
+interface AccessoriesCardProps {
   isCollapsed?: boolean;
 }
 
@@ -50,7 +51,9 @@ const lightOptions: LightOption[] = [
   },
 ];
 
-const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true }) => {
+const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
+  isCollapsed = true,
+}) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
   const cardRef = useRef<HTMLDivElement>(null);
@@ -78,11 +81,16 @@ const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true }) => {
       ref={cardRef}
       className={`${styles.card} ${collapsed ? styles.collapsed : ""}`}
     >
-      <div className={styles.headerRow}>
-        <h3 className={styles.title}>Iluminación</h3>
-        <button className={styles.toggleButton} onClick={handleToggleCollapse}>
-          {collapsed ? "▼" : "▲"}
-        </button>
+      <div className={styles.headerRow} onClick={handleToggleCollapse}>
+        <h3 className={styles.title}>Accesorios</h3>
+
+        <Image
+          src="/icons/+.png"
+          alt="+"
+          width={22}
+          height={22}
+          className={styles.plus}
+        />
       </div>
       {!collapsed && (
         <>
@@ -127,4 +135,4 @@ const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true }) => {
   );
 };
 
-export default LightCard;
+export default AccessoriesCard;

@@ -95,7 +95,7 @@ const DatePickerField = ({
       selectedDate.getDate()
     );
     onChangeDate(newDate);
-    setIsYearPopoverOpen(false); // Solo cierra el popover del año
+    setIsYearPopoverOpen(false);
   };
 
   const handleDateChange = (day: number) => {
@@ -105,7 +105,7 @@ const DatePickerField = ({
       day
     );
     onChangeDate(newDate);
-    closeAll(); // Cierra todo solo después de seleccionar un día
+    closeAll();
   };
 
   const renderYearPopover = () => {
@@ -119,7 +119,7 @@ const DatePickerField = ({
         className={styles.popover}
         style={{
           top: bottom + window.scrollY + 5,
-          left: right + window.scrollX - 150,
+          left: right + window.scrollX - 62,
         }}
       >
         <ul className={styles.scrollList}>
@@ -132,6 +132,37 @@ const DatePickerField = ({
               onClick={() => handleYearChange(year)}
             >
               {year}
+            </li>
+          ))}
+        </ul>
+      </div>,
+      document.body
+    );
+  };
+
+  const renderMonthPopover = () => {
+    if (!monthButtonRef.current) return null;
+
+    const { bottom, left } = monthButtonRef.current.getBoundingClientRect();
+    return createPortal(
+      <div
+        ref={monthPopoverRef}
+        className={styles.popover}
+        style={{
+          top: bottom + window.scrollY + 5,
+          left: left + window.scrollX + 30,
+        }}
+      >
+        <ul className={styles.scrollList}>
+          {MONTH_NAMES.map((month, index) => (
+            <li
+              key={month}
+              className={`${styles.scrollItem} ${
+                index === selectedDate.getMonth() ? styles.selected : ""
+              }`}
+              onClick={() => handleMonthChange(index)}
+            >
+              {month}
             </li>
           ))}
         </ul>
@@ -164,12 +195,6 @@ const DatePickerField = ({
 
     const currentMonthDays = Array.from(
       { length: daysInCurrentMonth },
-      (_, i) => i + 1
-    );
-
-    const totalCells = 42;
-    const nextMonthDays = Array.from(
-      { length: totalCells - (prevMonthDays.length + currentMonthDays.length) },
       (_, i) => i + 1
     );
 
@@ -231,23 +256,7 @@ const DatePickerField = ({
           </div>
           <div className={styles.separator}></div>
 
-          {isMonthPopoverOpen && (
-            <div ref={monthPopoverRef} className={styles.popover}>
-              <ul className={styles.scrollList}>
-                {MONTH_NAMES.map((month, index) => (
-                  <li
-                    key={month}
-                    className={`${styles.scrollItem} ${
-                      index === selectedDate.getMonth() ? styles.selected : ""
-                    }`}
-                    onClick={() => handleMonthChange(index)}
-                  >
-                    {month}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          {isMonthPopoverOpen && renderMonthPopover()}
 
           {isYearPopoverOpen && renderYearPopover()}
 
@@ -260,30 +269,32 @@ const DatePickerField = ({
             {prevMonthDays.map((day) => (
               <div
                 key={`prev-${day}`}
-                className={`${styles.day} ${styles.disabled}`}
+                className={`${styles.day} ${styles.transparentDay}`}
               >
                 {day}
               </div>
             ))}
-            {currentMonthDays.map((day) => (
-              <div
-                key={`current-${day}`}
-                className={`${styles.day} ${
-                  day === selectedDate.getDate() ? styles.selected : ""
-                }`}
-                onClick={() => handleDateChange(day)}
-              >
-                {day}
-              </div>
-            ))}
-            {nextMonthDays.map((day) => (
-              <div
-                key={`next-${day}`}
-                className={`${styles.day} ${styles.disabled}`}
-              >
-                {day}
-              </div>
-            ))}
+            {currentMonthDays.map((day) => {
+              const today = new Date();
+              const isDisabled =
+                selectedDate.getFullYear() === today.getFullYear() &&
+                selectedDate.getMonth() === today.getMonth() &&
+                day < today.getDate();
+
+              return (
+                <div
+                  key={`current-${day}`}
+                  className={`${styles.day} ${
+                    isDisabled ? styles.disabled : ""
+                  } ${day === selectedDate.getDate() ? styles.selected : ""}`}
+                  onClick={
+                    !isDisabled ? () => handleDateChange(day) : undefined
+                  }
+                >
+                  {day}
+                </div>
+              );
+            })}
           </div>
         </div>
       </>,
@@ -320,7 +331,7 @@ const DatePickerField = ({
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isDatePickerOpen]);
+  }, [closeAll, isDatePickerOpen]);
 
   return (
     <div className={styles.datePickerContainer}>

@@ -85,9 +85,14 @@ const TargetCard: React.FC<TargetCardProps> = ({
     >
       <div className={styles.headerRow} onClick={handleToggleCollapse}>
         {step > 0 && (
-          <button className={styles.backButton} onClick={handleGoBack}>
-            ←
-          </button>
+          <Image
+            src="/icons/up.png"
+            alt="down"
+            width={11}
+            height={11}
+            onClick={handleGoBack}
+            className={styles.backButton}
+          />
         )}
         <h3>
           {isCollapsed || selectedClientType
@@ -171,7 +176,13 @@ const TargetCard: React.FC<TargetCardProps> = ({
                     handleInputChange("photographerInstagram", e.target.value)
                   }
                 />
+                <p>
+                  Tranqui, no vamos a vender tus datos para que te llamen a la
+                  hora de la siesta, es para poder enviarte el resumen del
+                  pedido y ponernos en contacto para confirmar la reserva.
+                </p>
                 <input
+                  className={styles.promoCodeInput}
                   type="text"
                   placeholder="¿TIENES UN CÓDIGO PROMOCIONAL?"
                   value={formData.promoCode || ""}

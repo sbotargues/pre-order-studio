@@ -45,6 +45,7 @@ const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
       >
         {/* Header */}
         <div
+          onClick={handlePlusClick}
           className={`${isCollapsed ? styles.cardHeader : styles.upHeader} ${
             config.position === Position.LEFT
               ? styles.left
@@ -62,7 +63,6 @@ const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
           />
           {isCollapsed && (
             <Image
-              onClick={handlePlusClick}
               src="/icons/+.png"
               alt="+"
               width={18}
@@ -75,7 +75,7 @@ const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
         {/* Details */}
         {!isCollapsed && (
           <div className={styles.cardDetails}>
-            <DateTimeFields roomCardRef={roomCardRef}/>
+            <DateTimeFields roomCardRef={roomCardRef} />
             <GuestsInput />
           </div>
         )}

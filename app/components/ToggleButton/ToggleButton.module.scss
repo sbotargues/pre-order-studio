@@ -1,4 +1,4 @@
-.toggleButton {
+.toggleButton, .borderToggleButton {
   width: 44px;
   height: 25px;
   border-radius: 12px;
@@ -25,6 +25,10 @@
       background-color: #000; // Negro
     }
   }
+}
+
+.borderToggleButton {
+    border: 1px solid black;
 }
 
 .toggleCircle {

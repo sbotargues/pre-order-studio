@@ -6,12 +6,19 @@ import styles from "./ToggleButton.module.scss";
 interface ToggleButtonProps {
   isOn: boolean;
   onToggle: () => void;
+  border?: boolean;
 }
 
-const ToggleButton: React.FC<ToggleButtonProps> = ({ isOn, onToggle }) => {
+const ToggleButton: React.FC<ToggleButtonProps> = ({
+  isOn,
+  onToggle,
+  border = false,
+}) => {
   return (
     <div
-      className={`${styles.toggleButton} ${isOn ? styles.on : styles.off}`}
+      className={`${border ? styles.borderToggleButton : styles.toggleButton} ${
+        isOn ? styles.on : styles.off
+      }`}
       onClick={onToggle}
     >
       <div className={styles.toggleCircle}></div>

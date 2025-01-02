@@ -7,9 +7,10 @@ import styles from "./DateTimeFields.module.scss";
 
 interface DateTimeFieldsProps {
   roomCardRef: React.RefObject<HTMLDivElement>;
+  config: any;
 }
 
-const DateTimeFields = ({ roomCardRef }: DateTimeFieldsProps) => {
+const DateTimeFields = ({ roomCardRef, config }: DateTimeFieldsProps) => {
   const [checkInDate, setCheckInDate] = useState(new Date());
   const [checkInTime, setCheckInTime] = useState("09:00");
   const [checkOutDate, setCheckOutDate] = useState(new Date());
@@ -25,10 +26,12 @@ const DateTimeFields = ({ roomCardRef }: DateTimeFieldsProps) => {
             selectedDate={checkInDate}
             onChangeDate={setCheckInDate}
             roomCardRef={roomCardRef}
+            config={config}
           />
           <TimePickerField
             selectedTime={checkInTime}
             onChangeTime={setCheckInTime}
+            config={config}
           />
         </div>
       </div>
@@ -41,10 +44,12 @@ const DateTimeFields = ({ roomCardRef }: DateTimeFieldsProps) => {
             selectedDate={checkOutDate}
             onChangeDate={setCheckOutDate}
             roomCardRef={roomCardRef}
+            config={config}
           />
           <TimePickerField
             selectedTime={checkOutTime}
             onChangeTime={setCheckOutTime}
+            config={config}
           />
         </div>
       </div>

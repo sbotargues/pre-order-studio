@@ -13,6 +13,7 @@ interface BackgroundOptions {
 
 interface BackgroundsCardProps {
   isCollapsed?: boolean;
+  config?: any;
 }
 
 const backgroundsOptions = [
@@ -31,7 +32,7 @@ const backgroundsOptions = [
   { title: "S-53 Pecan/Cappuccino", color: "#CBAD96", textColor: "#000000" },
   { title: "S-19 Egg Nog/Ponche", color: "#E6CFB7", textColor: "#000000" },
   { title: "S-79 Almond/Almendra", color: "#E4B585", textColor: "#000000" },
-  { title: "S-76 Mocha/Café", color: "#BE936F", textColor: "#FFFFFF" },
+  { title: "S-76 Mocha/Café", color: "#BE936F", textColor: "#000000" },
   { title: "S-80 Cocoa/Cacao", color: "#93633F", textColor: "#FFFFFF" },
   { title: "S-17 Sienna", color: "#A05524", textColor: "#FFFFFF" },
   { title: "S-16 Chestnut/Castaña", color: "#773D29", textColor: "#FFFFFF" },
@@ -150,6 +151,7 @@ const backgroundsOptions = [
 
 const BackgroundsCard: React.FC<BackgroundsCardProps> = ({
   isCollapsed = true,
+  config,
 }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [selectedOptions, setSelectedOptions] = useState<

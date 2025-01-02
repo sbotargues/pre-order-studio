@@ -7,11 +7,13 @@ import styles from "./TimePickerField.module.scss";
 interface TimePickerFieldProps {
   selectedTime: string;
   onChangeTime: (time: string) => void;
+  config?: any;
 }
 
 const TimePickerField = ({
   selectedTime,
   onChangeTime,
+  config,
 }: TimePickerFieldProps) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
   const timePickerRef = useRef<HTMLInputElement | null>(null);

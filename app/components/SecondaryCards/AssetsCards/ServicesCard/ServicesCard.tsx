@@ -16,6 +16,7 @@ interface ServicesOption {
 
 interface ServicesCardProps {
   isCollapsed?: boolean;
+  config?: any;
 }
 
 const servicesOptions: ServicesOption[] = [
@@ -55,6 +56,7 @@ const servicesOptions: ServicesOption[] = [
 
 const ServicesCard: React.FC<ServicesCardProps> = ({
   isCollapsed = true,
+  config,
 }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
@@ -87,7 +89,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({
       className={`${styles.card} ${collapsed ? styles.collapsed : ""}`}
     >
       <div className={styles.headerRow} onClick={handleToggleCollapse}>
-        <h3 className={styles.title}>Accesorios</h3>
+        <h3 className={styles.title}>Servicios</h3>
 
         <Image
           src="/icons/+.png"

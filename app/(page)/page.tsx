@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./page.module.scss";
 import Header from "../components/Header/Header";
 import StepsHeader from "../components/StepsHeader/StepsHeader";
@@ -14,6 +14,11 @@ import AssetsCards from "../components/SecondaryCards/AssetsCards/AssetsCards";
 const IndexPage = () => {
   const { selectedRoom, isRoomCollapsed, currentStep } = useRoomState();
   const { selectRoom, setRoomCollapsed, setCurrentStep } = useRoomDispatch();
+
+  const continueButtonRef = useRef<HTMLButtonElement>(null);
+  const handleContinue = () => {
+    console.log("Continue");
+  };
 
   useEffect(() => {
     if (selectedRoom) {
@@ -35,11 +40,11 @@ const IndexPage = () => {
     }
   };
 
-  const renderStep = () => {
+  const renderStep = (config: any) => {
     return (
       <>
-        <TargetCard isCollapsed={currentStep <= 2} />
-        <AssetsCards isCollapsed={currentStep !== 2} />
+        <TargetCard isCollapsed={currentStep <= 2} config={config} />
+        <AssetsCards isCollapsed={currentStep !== 2} config={config} />
       </>
     );
   };
@@ -63,7 +68,19 @@ const IndexPage = () => {
           );
         })}
       </div>
-      {isRoomCollapsed && <>{renderStep()}</>}
+      {isRoomCollapsed && (
+        <>
+          {renderStep(roomConfigurations[selectedRoom as Rooms])}
+          <button
+            ref={continueButtonRef}
+            className={styles.continueButton}
+            style={{ backgroundColor: roomConfigurations[selectedRoom as Rooms]?.backgroundColor }}
+            onClick={handleContinue}
+          >
+            Enviar
+          </button>
+        </>
+      )}
     </div>
   );
 };

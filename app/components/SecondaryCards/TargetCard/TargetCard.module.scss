@@ -147,17 +147,12 @@
   width: 100%;
   padding: 12px;
   margin-top: 20px;
-  background-color: $orange-corporate;
   color: white;
   // font-size: $font-size-medium;
   font-weight: 500;
   text-transform: uppercase;
   border: none;
-  border-radius: 8px;
+  border-radius: 24px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: darken($orange-corporate, 10%);
-  }
 }

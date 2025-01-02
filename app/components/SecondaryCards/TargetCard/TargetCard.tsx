@@ -17,10 +17,12 @@ export enum CLIENT_TYPES {
 
 interface TargetCardProps {
   isCollapsed?: boolean;
+  config?: any;
 }
 
 const TargetCard: React.FC<TargetCardProps> = ({
   isCollapsed: propCollapsed,
+  config,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [step, setStep] = useState(0);
@@ -194,6 +196,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
               <button
                 ref={continueButtonRef}
                 className={styles.continueButton}
+                style={{ backgroundColor: config?.backgroundColor }}
                 onClick={handleContinue}
               >
                 Continuar

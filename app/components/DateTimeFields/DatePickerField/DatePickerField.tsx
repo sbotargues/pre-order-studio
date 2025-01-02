@@ -40,12 +40,14 @@ interface DatePickerFieldProps {
   selectedDate: Date;
   onChangeDate: (date: Date) => void;
   roomCardRef: React.RefObject<HTMLDivElement>;
+  config: any;
 }
 
 const DatePickerField = ({
   selectedDate,
   onChangeDate,
   roomCardRef,
+  config,
 }: DatePickerFieldProps) => {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const [isMonthPopoverOpen, setIsMonthPopoverOpen] = useState(false);
@@ -267,12 +269,13 @@ const DatePickerField = ({
               </div>
             ))}
             {prevMonthDays.map((day) => (
-              <div
+                <div
                 key={`prev-${day}`}
                 className={`${styles.day} ${styles.transparentDay}`}
-              >
+                style={{ '--hover-background-color': config.backgroundColor } as React.CSSProperties}
+                >
                 {day}
-              </div>
+                </div>
             ))}
             {currentMonthDays.map((day) => {
               const today = new Date();
@@ -287,6 +290,7 @@ const DatePickerField = ({
                   className={`${styles.day} ${
                     isDisabled ? styles.disabled : ""
                   } ${day === selectedDate.getDate() ? styles.selected : ""}`}
+                  style={day === selectedDate.getDate() ? { backgroundColor: config.backgroundColor } : {}}
                   onClick={
                     !isDisabled ? () => handleDateChange(day) : undefined
                   }

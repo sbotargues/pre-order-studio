@@ -21,6 +21,7 @@ interface RoomDispatch {
   setRoomCollapsed: (collapsed: boolean) => void;
   setCurrentStep: (step: number) => void;
   updateFormData: (field: string, value: any) => void;
+  resetFormData: () => void; // Nueva función para resetear los datos del formulario
 }
 
 const RoomStateContext = createContext<RoomState | undefined>(undefined);
@@ -48,6 +49,7 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
       setCurrentStep: (step: number) => setCurrentStep(step),
       updateFormData: (field: string, value: any) =>
         setFormData((prev) => ({ ...prev, [field]: value })),
+      resetFormData: () => setFormData({}),
     }),
     []
   );

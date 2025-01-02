@@ -16,6 +16,7 @@ interface LightOption {
 
 interface AccessoriesCardProps {
   isCollapsed?: boolean;
+  config?: any;
 }
 
 const lightOptions: LightOption[] = [
@@ -54,6 +55,7 @@ const lightOptions: LightOption[] = [
 ];
 
 const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
+  config,
   isCollapsed = true,
 }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);

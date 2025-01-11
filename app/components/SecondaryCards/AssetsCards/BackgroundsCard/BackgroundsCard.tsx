@@ -6,15 +6,8 @@ import ToggleButton from "@/app/components/ToggleButton/ToggleButton";
 import Image from "next/image";
 import { useRoomDispatch } from "@/app/context/RoomProvider";
 
-interface BackgroundOptions {
-  title: string;
-  color: string; // Color for the background
-  textColor: string; // Color for the text
-}
-
 interface BackgroundsCardProps {
   isCollapsed?: boolean;
-  config?: any;
 }
 
 const backgroundsOptions = [
@@ -152,7 +145,6 @@ const backgroundsOptions = [
 
 const BackgroundsCard: React.FC<BackgroundsCardProps> = ({
   isCollapsed = true,
-  config,
 }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [selectedOptions, setSelectedOptions] = useState<

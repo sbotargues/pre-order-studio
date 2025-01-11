@@ -17,7 +17,6 @@ interface AccessoryOption {
 
 interface AccessoriesCardProps {
   isCollapsed?: boolean;
-  config?: any;
 }
 
 const accessoryOptions: AccessoryOption[] = [
@@ -56,7 +55,6 @@ const accessoryOptions: AccessoryOption[] = [
 ];
 
 const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
-  config,
   isCollapsed = true,
 }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);

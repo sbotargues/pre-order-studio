@@ -14,7 +14,6 @@ interface TimePickerFieldProps {
 const TimePickerField = ({
   selectedTime,
   onChangeTime,
-  config,
 }: TimePickerFieldProps) => {
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
   const timePickerRef = useRef<HTMLInputElement | null>(null);

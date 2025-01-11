@@ -18,7 +18,6 @@ interface LightOption {
 
 interface LightCardProps {
   isCollapsed?: boolean;
-  config?: any;
 }
 
 const lightOptions: LightOption[] = [
@@ -62,10 +61,7 @@ const lightOptions: LightOption[] = [
   },
 ];
 
-const LightCard: React.FC<LightCardProps> = ({
-  isCollapsed = true,
-  config,
-}) => {
+const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, boolean>

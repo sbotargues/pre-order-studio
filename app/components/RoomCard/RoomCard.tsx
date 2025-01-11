@@ -81,7 +81,7 @@ const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
         {!isCollapsed && (
           <div className={styles.cardDetails}>
             <DateTimeFields roomCardRef={roomCardRef} config={config} />
-            <GuestsInput config={config} />
+            <GuestsInput />
           </div>
         )}
       </div>

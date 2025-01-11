@@ -73,7 +73,7 @@ const IndexPage = () => {
     return (
       <>
         <TargetCard isCollapsed={currentStep <= 2} config={config} />
-        <AssetsCards isCollapsed={currentStep !== 2} config={config} />
+        <AssetsCards isCollapsed={currentStep !== 2} />
       </>
     );
   };

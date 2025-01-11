@@ -4,11 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./GuestsInput.module.scss";
 
-interface GuestsInputProps {
-  config: any;
-}
-
-const GuestsInput = ({ config }: GuestsInputProps) => {
+const GuestsInput = () => {
   const [numPersons, setNumPersons] = useState(1);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const inputRef = useRef<HTMLDivElement | null>(null);

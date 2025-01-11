@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { createPortal } from "react-dom";
 import styles from "./DatePickerField.module.scss";
 import Image from "next/image";
@@ -78,10 +78,10 @@ const DatePickerField = ({
     setIsYearPopoverOpen(false);
   };
 
-  const closeAll = () => {
+  const closeAll = useCallback(() => {
     setIsDatePickerOpen(false);
     closePopovers();
-  };
+  }, []);
 
   const handleMonthChange = (monthIndex: number) => {
     const newDate = new Date(

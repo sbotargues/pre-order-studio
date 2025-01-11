@@ -17,7 +17,6 @@ interface ServicesOption {
 
 interface ServicesCardProps {
   isCollapsed?: boolean;
-  config?: any;
 }
 
 const servicesOptions: ServicesOption[] = [
@@ -39,10 +38,7 @@ const servicesOptions: ServicesOption[] = [
   },
 ];
 
-const ServicesCard: React.FC<ServicesCardProps> = ({
-  isCollapsed = true,
-  config,
-}) => {
+const ServicesCard: React.FC<ServicesCardProps> = ({ isCollapsed = true }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, boolean>

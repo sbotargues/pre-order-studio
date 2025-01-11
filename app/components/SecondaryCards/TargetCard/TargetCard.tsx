@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./TargetCard.module.scss";
-import { useRoomDispatch } from "@/app/context/RoomProvider";
+import { useRoomDispatch, useRoomState } from "@/app/context/RoomProvider";
 import Image from "next/image";
 
 export enum CLIENT_TYPES {
@@ -26,10 +26,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [step, setStep] = useState(0);
-  const [selectedClientType, setSelectedClientType] = useState<string | null>(
-    null
-  );
-  const [formData, setFormData] = useState<Record<string, string>>({});
+  const { formData } = useRoomState(); // Obtiene datos del estado global
   const { updateFormData, setCurrentStep } = useRoomDispatch();
 
   const cardRef = useRef<HTMLDivElement>(null);
@@ -43,21 +40,18 @@ const TargetCard: React.FC<TargetCardProps> = ({
 
   useEffect(() => {
     if (!isCollapsed && step === 1 && continueButtonRef.current) {
-      // Hace scroll hacia el botón de continuar cuando se muestra el formulario
       continueButtonRef.current.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
     } else if (!isCollapsed && cardRef.current) {
-      // Hace scroll hacia el inicio de la tarjeta cuando no está colapsada
       cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [isCollapsed, step]);
 
   const handleClientTypeClick = (type: string) => {
-    setSelectedClientType(type);
     updateFormData("clientType", type);
-    setStep(1); // Pasa al formulario
+    setStep(1); // Avanza al formulario
   };
 
   const handleToggleCollapse = () => {
@@ -69,13 +63,28 @@ const TargetCard: React.FC<TargetCardProps> = ({
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
     updateFormData(field, value);
   };
 
   const handleContinue = () => {
+    // Validación de campos obligatorios
+    const requiredFields = [
+      "brandName",
+      "brandInstagram",
+      "contactPerson",
+      "email",
+      "phone",
+      "photographerInstagram",
+    ];
+
+    const isValid = requiredFields.every((field) => formData[field]?.trim());
+    if (!isValid) {
+      alert("Por favor, completa todos los campos obligatorios.");
+      return;
+    }
+
     setIsCollapsed(true); // Colapsa el TargetCard
-    setCurrentStep(2); // Mueve al siguiente paso (LightCard)
+    setCurrentStep(2); // Avanza al siguiente paso
   };
 
   return (
@@ -97,16 +106,17 @@ const TargetCard: React.FC<TargetCardProps> = ({
           />
         )}
         <h3>
-          {isCollapsed || selectedClientType
-            ? selectedClientType || "Vale, pero... ¿Quién eres?*"
+          {isCollapsed || formData.clientType
+            ? formData.clientType || "Vale, pero... ¿Quién eres?*"
             : "Vale, pero... ¿Quién eres?*"}
         </h3>
 
-        {isCollapsed ? (
-          <Image src="/icons/down.png" alt="down" width={11} height={11} />
-        ) : (
-          <Image src="/icons/up.png" alt="down" width={11} height={11} />
-        )}
+        <Image
+          src={`/icons/${isCollapsed ? "down" : "up"}.png`}
+          alt={isCollapsed ? "Expandir" : "Colapsar"}
+          width={11}
+          height={11}
+        />
       </div>
       {!isCollapsed && (
         <>
@@ -117,16 +127,14 @@ const TargetCard: React.FC<TargetCardProps> = ({
                   <div
                     key={type}
                     className={`${styles.clientTypeItem} ${
-                      selectedClientType === type ? styles.active : ""
+                      formData.clientType === type ? styles.active : ""
                     }`}
                     onClick={() => handleClientTypeClick(type)}
                   >
                     {type}
-                    <>
-                      {CLIENT_TYPES.OTROS !== type ? (
-                        <div className={styles.linea}></div>
-                      ) : null}
-                    </>
+                    {type !== CLIENT_TYPES.OTROS && (
+                      <div className={styles.linea}></div>
+                    )}
                   </div>
                 ))}
               </div>

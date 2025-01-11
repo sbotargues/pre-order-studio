@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React, { useEffect, useRef } from "react";
 import styles from "./page.module.scss";
 import Header from "../components/Header/Header";
@@ -12,12 +13,39 @@ import TargetCard from "../components/SecondaryCards/TargetCard/TargetCard";
 import AssetsCards from "../components/SecondaryCards/AssetsCards/AssetsCards";
 
 const IndexPage = () => {
-  const { selectedRoom, isRoomCollapsed, currentStep } = useRoomState();
-  const { selectRoom, setRoomCollapsed, setCurrentStep } = useRoomDispatch();
+  const { selectedRoom, isRoomCollapsed, currentStep, formData } =
+    useRoomState();
+  const { selectRoom, setRoomCollapsed, setCurrentStep, resetFormData } =
+    useRoomDispatch();
+  const router = useRouter();
 
   const continueButtonRef = useRef<HTMLButtonElement>(null);
+
   const handleContinue = () => {
-    console.log("Continue");
+    console.log("Form data to be sent:", formData);
+
+    // Comentar o forzar el paso directo a la página de confirmación
+    /* 
+    fetch("/api/holded", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => {
+        if (response.ok) {
+          console.log("Data sent successfully!");
+          router.push("/confirmation");
+        } else {
+          console.error("Failed to send data");
+        }
+      })
+      .catch((error) => console.error("Error sending data:", error));
+    */
+
+    // Forzar redirección
+    router.push("/confirmation");
   };
 
   useEffect(() => {
@@ -33,6 +61,7 @@ const IndexPage = () => {
   const handlePlusClick = (room: Rooms) => {
     if (selectedRoom === room) {
       selectRoom(null);
+      resetFormData();
       setRoomCollapsed(false);
     } else {
       selectRoom(room);
@@ -48,6 +77,8 @@ const IndexPage = () => {
       </>
     );
   };
+
+  console.log({ selectedRoom, isRoomCollapsed, currentStep });
 
   return (
     <div>
@@ -74,7 +105,10 @@ const IndexPage = () => {
           <button
             ref={continueButtonRef}
             className={styles.continueButton}
-            style={{ backgroundColor: roomConfigurations[selectedRoom as Rooms]?.backgroundColor }}
+            style={{
+              backgroundColor:
+                roomConfigurations[selectedRoom as Rooms]?.backgroundColor,
+            }}
             onClick={handleContinue}
           >
             Enviar

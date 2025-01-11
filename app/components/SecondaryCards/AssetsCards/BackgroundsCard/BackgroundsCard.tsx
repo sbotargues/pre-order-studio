@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./BackgroundsCard.module.scss";
 import ToggleButton from "@/app/components/ToggleButton/ToggleButton";
 import Image from "next/image";
+import { useRoomDispatch } from "@/app/context/RoomProvider";
 
 interface BackgroundOptions {
   title: string;
@@ -157,14 +158,19 @@ const BackgroundsCard: React.FC<BackgroundsCardProps> = ({
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, boolean>
   >({});
-
   const cardRef = useRef<HTMLDivElement>(null);
+  const { updateFormData } = useRoomDispatch();
 
   useEffect(() => {
     if (!collapsed && cardRef.current) {
       cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [collapsed]);
+
+  // Sync selected backgrounds with global context
+  useEffect(() => {
+    updateFormData("backgroundsOptions", selectedOptions);
+  }, [selectedOptions, updateFormData]);
 
   const handleOptionToggle = (title: string) => {
     setSelectedOptions((prev) => ({ ...prev, [title]: !prev[title] }));

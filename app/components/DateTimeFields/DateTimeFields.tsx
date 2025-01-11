@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CustomDatePicker from "./DatePickerField/DatePickerField";
 import TimePickerField from "./TimePickerField/TimePickerField";
+import { useRoomDispatch } from "@/app/context/RoomProvider";
 import styles from "./DateTimeFields.module.scss";
 
 interface DateTimeFieldsProps {
@@ -15,6 +16,17 @@ const DateTimeFields = ({ roomCardRef, config }: DateTimeFieldsProps) => {
   const [checkInTime, setCheckInTime] = useState("09:00");
   const [checkOutDate, setCheckOutDate] = useState(new Date());
   const [checkOutTime, setCheckOutTime] = useState("14:00");
+
+  const { updateFormData } = useRoomDispatch();
+
+  useEffect(() => {
+    updateFormData("checkInDetails", {
+      checkInDate,
+      checkInTime,
+      checkOutDate,
+      checkOutTime,
+    });
+  }, [checkInDate, checkInTime, checkOutDate, checkOutTime, updateFormData]);
 
   return (
     <div className={styles.dateTime}>

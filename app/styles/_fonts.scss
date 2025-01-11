@@ -157,3 +157,40 @@
   font-weight: 400;
   font-style: italic;
 }
+
+/* Expandida */
+@font-face {
+  font-family: "Akzidenz Grotesk Pro Cn";
+  src: url("/fonts/AkzidenzGroteskPro-LightCn.woff2") format("woff2"),
+    url("/fonts/AkzidenzGroteskPro-LightCn.woff") format("woff"),
+    url("/fonts/AkzidenzGroteskPro-LightCn.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Akzidenz Grotesk Pro Cn";
+  src: url("/fonts/AkzidenzGroteskPro-MdCn.woff2") format("woff2"),
+    url("/fonts/AkzidenzGroteskPro-MdCn.woff") format("woff"),
+    url("/fonts/AkzidenzGroteskPro-MdCn.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Akzidenz Grotesk Pro Cn";
+  src: url("/fonts/AkzidenzGroteskPro-LigCntIt.woff2") format("woff2"),
+    url("/fonts/AkzidenzGroteskPro-LigCntIt.woff") format("woff"),
+    url("/fonts/AkzidenzGroteskPro-LigCntIt.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Akzidenz Grotesk Pro Cn";
+  src: url("/fonts/AkzidenzGroteskPro-CntItalic.woff2") format("woff2"),
+    url("/fonts/AkzidenzGroteskPro-CntItalic.woff") format("woff"),
+    url("/fonts/AkzidenzGroteskPro-CntItalic.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+}

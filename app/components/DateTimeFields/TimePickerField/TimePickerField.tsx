@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./TimePickerField.module.scss";
+import { useRoomDispatch } from "@/app/context/RoomProvider";
 
 interface TimePickerFieldProps {
   selectedTime: string;
@@ -18,6 +19,7 @@ const TimePickerField = ({
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
   const timePickerRef = useRef<HTMLInputElement | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
+  const { updateFormData } = useRoomDispatch(); // Contexto para actualizar el estado global
 
   const toggleOpenTimePicker = () => {
     setIsTimePickerOpen((prev) => !prev);
@@ -36,7 +38,9 @@ const TimePickerField = ({
   const selectTime = (hour: string | null, minute: string | null) => {
     const newHour = hour ?? currentHour;
     const newMinute = minute ?? currentMinute;
-    onChangeTime(`${newHour}:${newMinute}`);
+    const newTime = `${newHour}:${newMinute}`;
+    onChangeTime(newTime);
+    updateFormData("selectedTime", newTime); // Actualiza el estado global
     if (minute) closeTimePicker();
   };
 

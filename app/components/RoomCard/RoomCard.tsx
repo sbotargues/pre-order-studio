@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import Image from "next/image";
 import { Rooms, Position } from "@/app/types/types";
 import DateTimeFields from "../DateTimeFields/DateTimeFields";
 import GuestsInput from "../GuestsInput/GuestsInput";
+import { useRoomDispatch } from "@/app/context/RoomProvider";
 import styles from "./RoomCard.module.scss";
 
 interface RoomConfig {
@@ -22,8 +23,12 @@ interface RoomCardProps {
 
 const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
-
+  const { updateFormData } = useRoomDispatch();
   const roomCardRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    updateFormData("selectedRoomDetails", { ...config });
+  }, [config, updateFormData]);
 
   const toggleCollapse = () => setIsCollapsed(!isCollapsed);
 

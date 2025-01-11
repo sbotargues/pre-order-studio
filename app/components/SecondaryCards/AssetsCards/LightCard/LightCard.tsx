@@ -5,6 +5,7 @@ import styles from "./LightCard.module.scss";
 import ItemCard from "@/app/components/ItemCard/ItemCard";
 import Image from "next/image";
 import ToggleButton from "@/app/components/ToggleButton/ToggleButton";
+import { useRoomDispatch } from "@/app/context/RoomProvider";
 
 interface LightOption {
   title: string;
@@ -61,12 +62,16 @@ const lightOptions: LightOption[] = [
   },
 ];
 
-const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true, config }) => {
+const LightCard: React.FC<LightCardProps> = ({
+  isCollapsed = true,
+  config,
+}) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, boolean>
   >({});
   const cardRef = useRef<HTMLDivElement>(null);
+  const { updateFormData } = useRoomDispatch();
 
   useEffect(() => {
     setCollapsed(isCollapsed);
@@ -77,6 +82,11 @@ const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true, config }) => 
       cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [collapsed]);
+
+  // Update the global context whenever selectedOptions changes
+  useEffect(() => {
+    updateFormData("lightOptions", selectedOptions);
+  }, [selectedOptions, updateFormData]);
 
   const handleOptionToggle = (optionTitle: string) => {
     setSelectedOptions((prev) => ({
@@ -139,7 +149,7 @@ const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true, config }) => 
             30 MIN. DE ASISTENCIA Y ESQUEMA DE ILUMINACIÓN
             <ToggleButton
               isOn={selectedOptions[lightOptions[0].title]}
-              onToggle={() => console.log("toggle")}
+              onToggle={() => handleOptionToggle(lightOptions[0].title)}
             />
           </p>
           <p className={styles.aditionalInfo}>

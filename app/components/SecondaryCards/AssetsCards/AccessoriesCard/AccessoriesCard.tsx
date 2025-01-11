@@ -4,8 +4,9 @@ import React, { useState, useEffect, useRef } from "react";
 import styles from "./AccessoriesCard.module.scss";
 import Image from "next/image";
 import ItemCard from "@/app/components/ItemCard/ItemCard";
+import { useRoomDispatch } from "@/app/context/RoomProvider";
 
-interface LightOption {
+interface AccessoryOption {
   title: string;
   price: string;
   details: string[];
@@ -19,7 +20,7 @@ interface AccessoriesCardProps {
   config?: any;
 }
 
-const lightOptions: LightOption[] = [
+const accessoryOptions: AccessoryOption[] = [
   {
     title: "PACK PROFOTO",
     price: "15€/h",
@@ -37,20 +38,20 @@ const lightOptions: LightOption[] = [
     image: "/images/flashProfoto.png",
   },
   {
-    title: "PACK PROFOTO",
-    price: "15€/h",
+    title: "STEAMER",
+    price: "10€/día",
     detailsTitle: [],
     details: [],
     isSelected: false,
-    image: "/images/flashProfoto.png",
+    image: "/images/steamer.png",
   },
   {
-    title: "PACK LUZ CONTINUA",
-    price: "15€/h",
+    title: "TRÍPODE",
+    price: "8€/día",
     detailsTitle: [],
     details: [],
     isSelected: false,
-    image: "/images/flashProfoto.png",
+    image: "/images/tripod.png",
   },
 ];
 
@@ -59,11 +60,11 @@ const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
   isCollapsed = true,
 }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
-  const [selectedOption, setSelectedOption] = useState<string | null>(null);
-  const cardRef = useRef<HTMLDivElement>(null);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, boolean>
   >({});
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { updateFormData } = useRoomDispatch();
 
   useEffect(() => {
     setCollapsed(isCollapsed);
@@ -75,8 +76,16 @@ const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
     }
   }, [collapsed]);
 
+  // Update global context whenever selectedOptions changes
+  useEffect(() => {
+    updateFormData("accessoryOptions", selectedOptions);
+  }, [selectedOptions, updateFormData]);
+
   const handleOptionToggle = (optionTitle: string) => {
-    setSelectedOption((prev) => (prev === optionTitle ? null : optionTitle));
+    setSelectedOptions((prev) => ({
+      ...prev,
+      [optionTitle]: !prev[optionTitle],
+    }));
   };
 
   const handleToggleCollapse = () => {
@@ -91,18 +100,28 @@ const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
       <div className={styles.headerRow} onClick={handleToggleCollapse}>
         <h3 className={styles.title}>Accesorios</h3>
 
-        <Image
-          src="/icons/+.png"
-          alt="+"
-          width={22}
-          height={22}
-          className={styles.plus}
-        />
+        {collapsed ? (
+          <Image
+            src="/icons/+.png"
+            alt="+"
+            width={22}
+            height={22}
+            className={styles.plus}
+          />
+        ) : (
+          <Image
+            src="/icons/-.png"
+            alt="-"
+            width={11}
+            height={11}
+            className={styles.minus}
+          />
+        )}
       </div>
       {!collapsed && (
         <>
           <div className={styles.options}>
-            {lightOptions.map((option) => (
+            {accessoryOptions.map((option) => (
               <ItemCard
                 key={option.title}
                 image={option.image}

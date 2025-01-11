@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./DatePickerField.module.scss";
 import Image from "next/image";
+import { useRoomDispatch } from "@/app/context/RoomProvider";
 
 export enum MONTHS {
   ENERO = "ENE",
@@ -60,6 +61,8 @@ const DatePickerField = ({
   const yearPopoverRef = useRef<HTMLDivElement | null>(null);
   const monthPopoverRef = useRef<HTMLDivElement | null>(null);
 
+  const { updateFormData } = useRoomDispatch();
+
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 50 }, (_, i) => currentYear + i);
 
@@ -87,6 +90,7 @@ const DatePickerField = ({
       selectedDate.getDate()
     );
     onChangeDate(newDate);
+    updateFormData("selectedDate", newDate);
     closePopovers();
   };
 
@@ -97,6 +101,7 @@ const DatePickerField = ({
       selectedDate.getDate()
     );
     onChangeDate(newDate);
+    updateFormData("selectedDate", newDate);
     setIsYearPopoverOpen(false);
   };
 
@@ -107,6 +112,7 @@ const DatePickerField = ({
       day
     );
     onChangeDate(newDate);
+    updateFormData("selectedDate", newDate);
     closeAll();
   };
 
@@ -269,13 +275,17 @@ const DatePickerField = ({
               </div>
             ))}
             {prevMonthDays.map((day) => (
-                <div
+              <div
                 key={`prev-${day}`}
                 className={`${styles.day} ${styles.transparentDay}`}
-                style={{ '--hover-background-color': config.backgroundColor } as React.CSSProperties}
-                >
+                style={
+                  {
+                    "--hover-background-color": config.backgroundColor,
+                  } as React.CSSProperties
+                }
+              >
                 {day}
-                </div>
+              </div>
             ))}
             {currentMonthDays.map((day) => {
               const today = new Date();
@@ -290,7 +300,11 @@ const DatePickerField = ({
                   className={`${styles.day} ${
                     isDisabled ? styles.disabled : ""
                   } ${day === selectedDate.getDate() ? styles.selected : ""}`}
-                  style={day === selectedDate.getDate() ? { backgroundColor: config.backgroundColor } : {}}
+                  style={
+                    day === selectedDate.getDate()
+                      ? { backgroundColor: config.backgroundColor }
+                      : {}
+                  }
                   onClick={
                     !isDisabled ? () => handleDateChange(day) : undefined
                   }

@@ -27,7 +27,7 @@ const Header = () => {
   return (
     <div className={styles.container} style={{ backgroundColor: headerColor }}>
       <Image
-        src="/images/LOGO_NEGRO.png"
+        src="/images/logo-negro.png"
         alt="Logo"
         width={110}
         height={100}

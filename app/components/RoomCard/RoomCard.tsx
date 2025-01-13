@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Rooms, Position } from "@/app/types/types";
 import DateTimeFields from "../DateTimeFields/DateTimeFields";
 import GuestsInput from "../GuestsInput/GuestsInput";
-import { useRoomDispatch } from "@/app/context/RoomProvider";
+import { useRoomDispatch, useRoomState } from "@/app/context/RoomProvider";
 import styles from "./RoomCard.module.scss";
 
 interface RoomConfig {
@@ -23,18 +23,32 @@ interface RoomCardProps {
 
 const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
   const [isCollapsed, setIsCollapsed] = useState(true);
+  const { isRoomCollapsed } = useRoomState();
   const { updateFormData } = useRoomDispatch();
   const roomCardRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (isRoomCollapsed) {
+      setIsCollapsed(false);
+    }
+  }, [isRoomCollapsed]);
 
   useEffect(() => {
     updateFormData("selectedRoomDetails", { ...config });
   }, [config, updateFormData]);
 
-  const toggleCollapse = () => setIsCollapsed(!isCollapsed);
+  const toggleCollapse = () => {
+    setIsCollapsed((prev) => !prev);
+    if (!isCollapsed) {
+      onPlusClick(config as unknown as Rooms);
+    }
+  };
 
   const handlePlusClick = () => {
-    onPlusClick(config as unknown as Rooms);
-    toggleCollapse();
+    if (isCollapsed) {
+      onPlusClick(config as unknown as Rooms);
+      toggleCollapse();
+    }
   };
 
   return (
@@ -48,7 +62,6 @@ const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
           isCollapsed ? styles.collapsed : styles.expanded
         }`}
       >
-        {/* Header */}
         <div
           onClick={handlePlusClick}
           className={`${isCollapsed ? styles.cardHeader : styles.upHeader} ${
@@ -76,8 +89,6 @@ const RoomCard = ({ config, onPlusClick }: RoomCardProps) => {
             />
           )}
         </div>
-
-        {/* Details */}
         {!isCollapsed && (
           <div className={styles.cardDetails}>
             <DateTimeFields roomCardRef={roomCardRef} config={config} />

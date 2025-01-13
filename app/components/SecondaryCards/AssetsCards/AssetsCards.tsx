@@ -14,10 +14,10 @@ interface AssetsCardsProps {
 const AssetsCards: React.FC<AssetsCardsProps> = ({ isCollapsed }) => {
   return (
     <div className={styles.assetsCards}>
-      <LightCard isCollapsed={isCollapsed} />
-      <AccessoriesCard isCollapsed={isCollapsed} />
-      <BackgroundsCard isCollapsed={isCollapsed} />
-      <ServicesCard isCollapsed={isCollapsed} />
+      <LightCard isCollapsed={isCollapsed} id="light-card" />
+      <AccessoriesCard />
+      <BackgroundsCard />
+      <ServicesCard />
     </div>
   );
 };

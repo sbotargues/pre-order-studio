@@ -1,8 +1,9 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import styles from "./page.module.scss";
+import Footer from "../components/Footer/Footer";
 import Header from "../components/Header/Header";
 import StepsHeader from "../components/StepsHeader/StepsHeader";
 import RoomCard from "../components/RoomCard/RoomCard";
@@ -13,13 +14,16 @@ import TargetCard from "../components/SecondaryCards/TargetCard/TargetCard";
 import AssetsCards from "../components/SecondaryCards/AssetsCards/AssetsCards";
 
 const IndexPage = () => {
-  const { selectedRoom, isRoomCollapsed, currentStep, formData } =
-    useRoomState();
+  const {
+    selectedRoom,
+    isRoomCollapsed,
+    currentStep,
+    formData,
+    selectedRoomConfig,
+  } = useRoomState();
   const { selectRoom, setRoomCollapsed, setCurrentStep, resetFormData } =
     useRoomDispatch();
   const router = useRouter();
-
-  const continueButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleContinue = () => {
     console.log("Form data to be sent:", formData);
@@ -50,13 +54,11 @@ const IndexPage = () => {
 
   useEffect(() => {
     if (selectedRoom) {
-      setRoomCollapsed(true);
       setCurrentStep(1);
     } else {
-      setRoomCollapsed(false);
       setCurrentStep(0);
     }
-  }, [selectedRoom, setRoomCollapsed, setCurrentStep]);
+  }, [selectedRoom, setCurrentStep]);
 
   const handlePlusClick = (room: Rooms) => {
     if (selectedRoom === room) {
@@ -69,52 +71,52 @@ const IndexPage = () => {
     }
   };
 
-  const renderStep = (config: any) => {
+  const renderStep = () => {
     return (
       <>
-        <TargetCard isCollapsed={currentStep <= 2} config={config} />
+        <TargetCard
+          isCollapsed={currentStep <= 2}
+          config={selectedRoomConfig}
+        />
         <AssetsCards isCollapsed={currentStep !== 2} />
       </>
     );
   };
 
-  console.log({ selectedRoom, isRoomCollapsed, currentStep });
-
   return (
-    <div>
+    <div className={styles.page}>
       <Header />
       <StepsHeader currentStep={currentStep} selectedRoom={selectedRoom} />
-      <div className={styles.section}>
-        {Object.keys(roomConfigurations).map((roomKey) => {
-          const config = roomConfigurations[roomKey as Rooms];
+      <div className={styles.container}>
+        <div className={styles.section}>
+          {Object.keys(roomConfigurations).map((roomKey) => {
+            const config = roomConfigurations[roomKey as Rooms];
 
-          if (isRoomCollapsed && selectedRoom !== roomKey) return null;
+            if (isRoomCollapsed && selectedRoom !== roomKey) return null;
 
-          return (
-            <RoomCard
-              key={roomKey}
-              config={config}
-              onPlusClick={() => handlePlusClick(roomKey as Rooms)}
-            />
-          );
-        })}
+            return (
+              <RoomCard
+                key={roomKey}
+                config={config}
+                onPlusClick={() => handlePlusClick(roomKey as Rooms)}
+              />
+            );
+          })}
+        </div>
+        {isRoomCollapsed && (
+          <>
+            {renderStep()}
+            <button
+              className={styles.continueButton}
+              onClick={handleContinue}
+              disabled={currentStep < 2}
+            >
+              Enviar
+            </button>
+          </>
+        )}
       </div>
-      {isRoomCollapsed && (
-        <>
-          {renderStep(roomConfigurations[selectedRoom as Rooms])}
-          <button
-            ref={continueButtonRef}
-            className={styles.continueButton}
-            style={{
-              backgroundColor:
-                roomConfigurations[selectedRoom as Rooms]?.backgroundColor,
-            }}
-            onClick={handleContinue}
-          >
-            Enviar
-          </button>
-        </>
-      )}
+      <Footer />
     </div>
   );
 };

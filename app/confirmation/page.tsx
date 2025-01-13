@@ -10,8 +10,6 @@ import { RoomColors, Rooms } from "../types/types";
 const ConfirmationPage = () => {
   const { formData, selectedRoom } = useRoomState();
 
-  console.log(formData);
-
   const {
     selectedRoomDetails = {},
     checkInDetails = {},

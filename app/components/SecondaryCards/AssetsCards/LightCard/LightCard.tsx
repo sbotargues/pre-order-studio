@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./LightCard.module.scss";
 import ItemCard from "@/app/components/ItemCard/ItemCard";
 import Image from "next/image";
@@ -18,6 +18,7 @@ interface LightOption {
 
 interface LightCardProps {
   isCollapsed?: boolean;
+  id?: string;
 }
 
 const lightOptions: LightOption[] = [
@@ -61,23 +62,17 @@ const lightOptions: LightOption[] = [
   },
 ];
 
-const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true }) => {
+const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true, id }) => {
   const [collapsed, setCollapsed] = useState(isCollapsed);
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, boolean>
   >({});
-  const cardRef = useRef<HTMLDivElement>(null);
+
   const { updateFormData } = useRoomDispatch();
 
   useEffect(() => {
     setCollapsed(isCollapsed);
   }, [isCollapsed]);
-
-  useEffect(() => {
-    if (!collapsed && cardRef.current) {
-      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [collapsed]);
 
   // Update the global context whenever selectedOptions changes
   useEffect(() => {
@@ -97,8 +92,8 @@ const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true }) => {
 
   return (
     <div
-      ref={cardRef}
       className={`${styles.card} ${collapsed ? styles.collapsed : ""}`}
+      id={id}
     >
       <div className={styles.headerRow} onClick={handleToggleCollapse}>
         <h3 className={styles.title}>Iluminación</h3>

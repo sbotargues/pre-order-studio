@@ -3,6 +3,7 @@
 import React from "react";
 import styles from "./StepsHeader.module.scss";
 import { RoomColors, Rooms } from "@/app/types/types";
+import { useRoomDispatch } from "@/app/context/RoomProvider";
 
 interface StepsHeaderProps {
   currentStep: number;
@@ -13,6 +14,8 @@ const StepsHeader: React.FC<StepsHeaderProps> = ({
   currentStep,
   selectedRoom,
 }) => {
+  const { selectRoom } = useRoomDispatch();
+
   const progressMapping = [10, 50, 60, 75, 100];
   const progressPercentage = progressMapping[currentStep];
 
@@ -38,6 +41,12 @@ const StepsHeader: React.FC<StepsHeaderProps> = ({
       backgroundColor: RoomColors.HOMESTUDIO,
     },
   ];
+
+  const handleRoomChange = (room: Rooms) => {
+    if (selectedRoom !== room) {
+      selectRoom(room);
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -75,6 +84,7 @@ const StepsHeader: React.FC<StepsHeaderProps> = ({
                     ? study.backgroundColor
                     : "transparent",
               }}
+              onClick={() => handleRoomChange(study.room)}
             >
               {study.name}
             </button>

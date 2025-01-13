@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./AccessoriesCard.module.scss";
 import Image from "next/image";
 import ItemCard from "@/app/components/ItemCard/ItemCard";
@@ -61,18 +61,12 @@ const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, boolean>
   >({});
-  const cardRef = useRef<HTMLDivElement>(null);
+
   const { updateFormData } = useRoomDispatch();
 
   useEffect(() => {
     setCollapsed(isCollapsed);
   }, [isCollapsed]);
-
-  useEffect(() => {
-    if (!collapsed && cardRef.current) {
-      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [collapsed]);
 
   // Update global context whenever selectedOptions changes
   useEffect(() => {
@@ -91,10 +85,7 @@ const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
   };
 
   return (
-    <div
-      ref={cardRef}
-      className={`${styles.card} ${collapsed ? styles.collapsed : ""}`}
-    >
+    <div className={`${styles.card} ${collapsed ? styles.collapsed : ""}`}>
       <div className={styles.headerRow} onClick={handleToggleCollapse}>
         <h3 className={styles.title}>Accesorios</h3>
 

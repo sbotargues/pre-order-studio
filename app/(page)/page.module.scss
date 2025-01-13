@@ -1,3 +1,12 @@
+.container {
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
 .section {
   display: flex;
   flex-direction: column;
@@ -9,6 +18,7 @@
 
 .continueButton {
   width: 95vw;
+  max-width: 600px;
   margin: 14px auto;
   padding-block: 8px;
   font-size: 36px;
@@ -17,6 +27,14 @@
   border: none;
   border-radius: 24px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, font-weight 0.3s ease;
   display: block;
+}
+
+.continueButton:disabled {
+  color: black;
+  background-color: #acacac;
+  cursor: not-allowed;
+  font-weight: 300;
+  opacity: 1;
 }

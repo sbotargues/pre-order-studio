@@ -237,6 +237,7 @@ const DatePickerField = ({
             top: bottom + window.scrollY + 10,
             left: left + width / 2,
             width: "95vw",
+            maxWidth: "600px",
           }}
         >
           <div className={styles.header}>

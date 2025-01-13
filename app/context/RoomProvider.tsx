@@ -8,12 +8,14 @@ import React, {
   ReactNode,
 } from "react";
 import { Rooms } from "../types/types";
+import { roomConfigurations } from "../constants/roomConfig";
 
 interface RoomState {
   selectedRoom: Rooms | null;
   isRoomCollapsed: boolean;
   currentStep: number;
-  formData: Record<string, any>; // Datos acumulados del formulario
+  formData: Record<string, any>;
+  selectedRoomConfig: (typeof roomConfigurations)[Rooms] | null;
 }
 
 interface RoomDispatch {
@@ -21,7 +23,7 @@ interface RoomDispatch {
   setRoomCollapsed: (collapsed: boolean) => void;
   setCurrentStep: (step: number) => void;
   updateFormData: (field: string, value: any) => void;
-  resetFormData: () => void; // Nueva función para resetear los datos del formulario
+  resetFormData: () => void;
 }
 
 const RoomStateContext = createContext<RoomState | undefined>(undefined);
@@ -36,15 +38,27 @@ export const RoomProvider = ({ children }: RoomProviderProps) => {
   const [isRoomCollapsed, setRoomCollapsed] = useState(false);
   const [currentStep, setCurrentStep] = useState(0);
   const [formData, setFormData] = useState<Record<string, any>>({});
+  const [selectedRoomConfig, setSelectedRoomConfig] = useState<
+    (typeof roomConfigurations)[Rooms] | null
+  >(null);
 
   const state = useMemo(
-    () => ({ selectedRoom, isRoomCollapsed, currentStep, formData }),
-    [selectedRoom, isRoomCollapsed, currentStep, formData]
+    () => ({
+      selectedRoom,
+      isRoomCollapsed,
+      currentStep,
+      formData,
+      selectedRoomConfig,
+    }),
+    [selectedRoom, isRoomCollapsed, currentStep, formData, selectedRoomConfig]
   );
 
   const dispatch = useMemo(
     () => ({
-      selectRoom: (room: Rooms | null) => setSelectedRoom(room),
+      selectRoom: (room: Rooms | null) => {
+        setSelectedRoom(room);
+        setSelectedRoomConfig(room ? roomConfigurations[room] : null);
+      },
       setRoomCollapsed: (collapsed: boolean) => setRoomCollapsed(collapsed),
       setCurrentStep: (step: number) => setCurrentStep(step),
       updateFormData: (field: string, value: any) =>

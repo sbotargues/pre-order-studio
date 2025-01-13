@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./BackgroundsCard.module.scss";
 import ToggleButton from "@/app/components/ToggleButton/ToggleButton";
 import Image from "next/image";
@@ -150,14 +150,7 @@ const BackgroundsCard: React.FC<BackgroundsCardProps> = ({
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, boolean>
   >({});
-  const cardRef = useRef<HTMLDivElement>(null);
   const { updateFormData } = useRoomDispatch();
-
-  useEffect(() => {
-    if (!collapsed && cardRef.current) {
-      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  }, [collapsed]);
 
   // Sync selected backgrounds with global context
   useEffect(() => {
@@ -169,10 +162,7 @@ const BackgroundsCard: React.FC<BackgroundsCardProps> = ({
   };
 
   return (
-    <div
-      ref={cardRef}
-      className={`${styles.card} ${collapsed ? styles.collapsed : ""}`}
-    >
+    <div className={`${styles.card} ${collapsed ? styles.collapsed : ""}`}>
       <div
         className={styles.headerRow}
         onClick={() => setCollapsed((prev) => !prev)}

@@ -26,7 +26,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [step, setStep] = useState(0);
-  const { formData } = useRoomState(); // Obtiene datos del estado global
+  const { formData } = useRoomState();
   const { updateFormData, setCurrentStep } = useRoomDispatch();
 
   const cardRef = useRef<HTMLDivElement>(null);
@@ -39,19 +39,17 @@ const TargetCard: React.FC<TargetCardProps> = ({
   }, [propCollapsed]);
 
   useEffect(() => {
-    if (!isCollapsed && step === 1 && continueButtonRef.current) {
-      continueButtonRef.current.scrollIntoView({
+    if (!isCollapsed && step === 1 && cardRef.current) {
+      cardRef.current.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
-    } else if (!isCollapsed && cardRef.current) {
-      cardRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
     }
   }, [isCollapsed, step]);
 
   const handleClientTypeClick = (type: string) => {
     updateFormData("clientType", type);
-    setStep(1); // Avanza al formulario
+    setStep(1);
   };
 
   const handleToggleCollapse = () => {
@@ -67,7 +65,6 @@ const TargetCard: React.FC<TargetCardProps> = ({
   };
 
   const handleContinue = () => {
-    // Validación de campos obligatorios
     const requiredFields = [
       "brandName",
       "brandInstagram",
@@ -83,8 +80,20 @@ const TargetCard: React.FC<TargetCardProps> = ({
       return;
     }
 
-    setIsCollapsed(true); // Colapsa el TargetCard
-    setCurrentStep(2); // Avanza al siguiente paso
+    const lightCard = document.getElementById("light-card");
+    if (lightCard) {
+      const yOffset = -500; // Ajusta el margen superior (en píxeles)
+      const yPosition =
+        lightCard.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+      window.scrollTo({
+        top: yPosition,
+        behavior: "smooth",
+      });
+    }
+
+    setIsCollapsed(true);
+    setCurrentStep(2);
   };
 
   return (

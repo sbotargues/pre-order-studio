@@ -105,7 +105,8 @@
     word-spacing: 2px;
   }
 
-  input {
+  input,
+  select {
     width: 100%;
     padding: 4px 14px;
     font-size: 12px;
@@ -116,6 +117,7 @@
     border-radius: 50px;
     outline: none;
     transition: border-color 0.3s ease, background-color 0.3s ease;
+    appearance: none;
 
     &::placeholder {
       color: rgb(94, 93, 93);
@@ -131,6 +133,32 @@
       border-color: #e2d5b9;
       background-color: #fefcf9;
     }
+  }
+
+  .errorInput {
+    border-color: red;
+    background-color: #ffe6e6;
+
+    &:focus {
+      border-color: red;
+    }
+  }
+
+  .errorText {
+    font-size: 10px;
+    font-weight: 300;
+    color: red;
+  }
+  select {
+    background-size: 12px; 
+    padding-inline-start: 14px;
+    padding-block: 6px;
+    cursor: pointer;
+    color: rgb(94, 93, 93);
+    font-size: 12px;
+    font-weight: 300;
+    text-transform: uppercase;
+    line-height: 9px;
   }
 }
 
@@ -149,7 +177,6 @@
   padding: 12px;
   margin-top: 20px;
   color: white;
-  // font-size: $font-size-medium;
   font-weight: 500;
   text-transform: uppercase;
   border: none;
@@ -157,3 +184,20 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
+
+.dropdownWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  .dropdownIcon {
+    position: absolute;
+    right: 15px;
+    pointer-events: none;
+
+    .icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+

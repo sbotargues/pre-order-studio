@@ -107,6 +107,11 @@ const IndexPage = () => {
           <>
             {renderStep()}
             <button
+              style={
+                currentStep >= 2
+                  ? { backgroundColor: selectedRoomConfig?.backgroundColor }
+                  : {}
+              }
               className={styles.continueButton}
               onClick={handleContinue}
               disabled={currentStep < 2}

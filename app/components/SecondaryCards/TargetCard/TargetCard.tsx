@@ -20,12 +20,38 @@ interface TargetCardProps {
   config?: any;
 }
 
+const CLIENT_FIELDS: Record<string, { label: string; type: string }[]> = {
+  [CLIENT_TYPES.SOY_MARCA]: [
+    { label: "NOMBRE DE LA MARCA*", type: "text" },
+    { label: "INSTA DE LA MARCA*", type: "text" },
+    { label: "PERSONA DE CONTACTO*", type: "text" },
+    { label: "CARGO DE LA PERSONA DE CONTACTO*", type: "dropdown" },
+    { label: "CORREO ELECTRÓNICO*", type: "email" },
+    { label: "TELÉFONO*", type: "tel" },
+  ],
+  [CLIENT_TYPES.SOY_AGENCIA]: [
+    { label: "NOMBRE DE LA AGENCIA*", type: "text" },
+    { label: "CARGO DE LA PERSONA DE CONTACTO*", type: "dropdown" },
+    { label: "CORREO ELECTRÓNICO*", type: "email" },
+    { label: "TELÉFONO*", type: "tel" },
+  ],
+  [CLIENT_TYPES.SOY_ESTUDIANTE]: [
+    { label: "NOMBRE Y APELLIDO*", type: "text" },
+    { label: "INSTA*", type: "text" },
+    { label: "ESCUELA*", type: "text" },
+    { label: "ADJUNTA TU CARNET DE ESTUDIANTE*", type: "file" },
+    { label: "CORREO ELECTRÓNICO*", type: "email" },
+    { label: "TELÉFONO*", type: "tel" },
+  ],
+};
+
 const TargetCard: React.FC<TargetCardProps> = ({
   isCollapsed: propCollapsed,
   config,
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [step, setStep] = useState(0);
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const { formData } = useRoomState();
   const { updateFormData, setCurrentStep } = useRoomDispatch();
 
@@ -47,6 +73,31 @@ const TargetCard: React.FC<TargetCardProps> = ({
     }
   }, [isCollapsed, step]);
 
+  const validateEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const validatePhone = (phone: string) => /^[0-9]{9,15}$/.test(phone);
+
+  const validateFields = () => {
+    const currentClientType = formData.clientType;
+    const fields = CLIENT_FIELDS[currentClientType] || [];
+    const newErrors: Record<string, string> = {};
+
+    fields.forEach((field) => {
+      const value = formData[field.label]?.trim();
+      if (!value) {
+        newErrors[field.label] = `El campo "${field.label}" es obligatorio.`;
+      } else if (field.type === "email" && !validateEmail(value)) {
+        newErrors[field.label] = "El correo electrónico no es válido.";
+      } else if (field.type === "tel" && !validatePhone(value)) {
+        newErrors[field.label] = "El teléfono debe tener entre 9 y 15 dígitos.";
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleClientTypeClick = (type: string) => {
     updateFormData("clientType", type);
     setStep(1);
@@ -56,44 +107,76 @@ const TargetCard: React.FC<TargetCardProps> = ({
     setIsCollapsed((prev) => !prev);
   };
 
-  const handleGoBack = () => {
-    setStep(0);
-  };
-
   const handleInputChange = (field: string, value: string) => {
     updateFormData(field, value);
+
+    if (errors[field]) {
+      setErrors((prev) => ({ ...prev, [field]: "" }));
+    }
   };
 
   const handleContinue = () => {
-    const requiredFields = [
-      "brandName",
-      "brandInstagram",
-      "contactPerson",
-      "email",
-      "phone",
-      "photographerInstagram",
-    ];
+    if (!validateFields()) return;
 
-    const isValid = requiredFields.every((field) => formData[field]?.trim());
-    if (!isValid) {
-      alert("Por favor, completa todos los campos obligatorios.");
-      return;
-    }
-
-    const lightCard = document.getElementById("light-card");
-    if (lightCard) {
-      const yOffset = -500;
-      const yPosition =
-        lightCard.getBoundingClientRect().top + window.pageYOffset + yOffset;
-
-      window.scrollTo({
-        top: yPosition,
+    if (cardRef.current) {
+      cardRef.current.scrollIntoView({
         behavior: "smooth",
+        block: "center",
       });
     }
 
     setIsCollapsed(true);
     setCurrentStep(2);
+  };
+
+  const renderFields = () => {
+    const currentClientType = formData.clientType;
+    const fields = CLIENT_FIELDS[currentClientType] || [];
+
+    return fields.map((field, index) => (
+      <div key={index} className={styles.fieldWrapper}>
+        {field.type === "dropdown" ? (
+          <div className={styles.dropdownWrapper}>
+            <select
+              className={`${styles.input} ${
+                errors[field.label] ? styles.errorInput : ""
+              }`}
+              onChange={(e) => handleInputChange(field.label, e.target.value)}
+              value={formData[field.label] || ""}
+            >
+              <option value="">Selecciona una opción</option>
+              <option value="Producer">Producer</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Fotógrafx">Fotógrafx</option>
+              <option value="CEO">CEO</option>
+              <option value="Otros">Otros</option>
+            </select>
+            <div className={styles.dropdownIcon}>
+              <Image
+                src="/icons/up.png"
+                alt="Dropdown Icon"
+                width={10}
+                height={10}
+                className={styles.icon}
+              />
+            </div>
+          </div>
+        ) : (
+          <input
+            type={field.type}
+            placeholder={field.label}
+            value={formData[field.label] || ""}
+            className={`${styles.input} ${
+              errors[field.label] ? styles.errorInput : ""
+            }`}
+            onChange={(e) => handleInputChange(field.label, e.target.value)}
+          />
+        )}
+        {errors[field.label] && (
+          <span className={styles.errorText}>{errors[field.label]}</span>
+        )}
+      </div>
+    ));
   };
 
   return (
@@ -110,7 +193,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
             alt="down"
             width={11}
             height={11}
-            onClick={handleGoBack}
+            onClick={() => setStep(0)}
             className={styles.backButton}
           />
         )}
@@ -150,66 +233,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
             </div>
           ) : (
             <div className={styles.clientFormStep}>
-              <form className={styles.clientForm}>
-                <input
-                  type="text"
-                  placeholder="NOMBRE DE LA MARCA*"
-                  value={formData.brandName || ""}
-                  onChange={(e) =>
-                    handleInputChange("brandName", e.target.value)
-                  }
-                />
-                <input
-                  type="text"
-                  placeholder="INSTA DE LA MARCA*"
-                  value={formData.brandInstagram || ""}
-                  onChange={(e) =>
-                    handleInputChange("brandInstagram", e.target.value)
-                  }
-                />
-                <input
-                  type="text"
-                  placeholder="PERSONA DE CONTACTO*"
-                  value={formData.contactPerson || ""}
-                  onChange={(e) =>
-                    handleInputChange("contactPerson", e.target.value)
-                  }
-                />
-                <input
-                  type="email"
-                  placeholder="CORREO ELECTRÓNICO*"
-                  value={formData.email || ""}
-                  onChange={(e) => handleInputChange("email", e.target.value)}
-                />
-                <input
-                  type="tel"
-                  placeholder="TELÉFONO*"
-                  value={formData.phone || ""}
-                  onChange={(e) => handleInputChange("phone", e.target.value)}
-                />
-                <input
-                  type="text"
-                  placeholder="INSTA DEL FOTÓGRAFX/VIDEÓGRAFX*"
-                  value={formData.photographerInstagram || ""}
-                  onChange={(e) =>
-                    handleInputChange("photographerInstagram", e.target.value)
-                  }
-                />
-                <p>
-                  Tranqui, no vamos a vender tus datos para que te llamen a la
-                  hora de la siesta, es para poder enviarte el resumen del
-                  pedido y ponernos en contacto para confirmar la reserva.
-                </p>
-                <input
-                  className={styles.promoCodeInput}
-                  type="text"
-                  placeholder="¿TIENES UN CÓDIGO PROMOCIONAL?"
-                  value={formData.promoCode || ""}
-                  onChange={(e) =>
-                    handleInputChange("promoCode", e.target.value)
-                  }
-                />
-              </form>
+              <form className={styles.clientForm}>{renderFields()}</form>
               <button
                 ref={continueButtonRef}
                 className={styles.continueButton}

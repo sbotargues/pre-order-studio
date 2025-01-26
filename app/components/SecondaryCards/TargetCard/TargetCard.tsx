@@ -20,14 +20,21 @@ interface TargetCardProps {
   config?: any;
 }
 
-const CLIENT_FIELDS: Record<string, { label: string; type: string }[]> = {
+const CLIENT_FIELDS: Record<
+  string,
+  { label: string; type: string; options?: string[]; optionsTitle?: string }[]
+> = {
   [CLIENT_TYPES.SOY_MARCA]: [
-    { label: "NOMBRE DE LA MARCA*", type: "text" },
+    { label: "NOMBRE DE LA PERSONA DE CONTACTO*", type: "text" },
+    {
+      label: "CARGO DE LA PERSONA DE CONTACTO*",
+      type: "dropdown",
+      options: ["Producer", "Marketing", "Fotógrafx", "CEO", "Otros"],
+    },
     { label: "INSTA DE LA MARCA*", type: "text" },
-    { label: "PERSONA DE CONTACTO*", type: "text" },
-    { label: "CARGO DE LA PERSONA DE CONTACTO*", type: "dropdown" },
     { label: "CORREO ELECTRÓNICO*", type: "email" },
     { label: "TELÉFONO*", type: "tel" },
+    { label: "INSTA DEL FOTÓGRAFX/FILMAKER*", type: "text" },
   ],
   [CLIENT_TYPES.SOY_AGENCIA]: [
     { label: "NOMBRE DE LA AGENCIA*", type: "text" },
@@ -135,7 +142,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
 
     return fields.map((field, index) => (
       <div key={index} className={styles.fieldWrapper}>
-        {field.type === "dropdown" ? (
+        {field.type === "dropdown" && field.options ? (
           <div className={styles.dropdownWrapper}>
             <select
               className={`${styles.input} ${
@@ -144,12 +151,12 @@ const TargetCard: React.FC<TargetCardProps> = ({
               onChange={(e) => handleInputChange(field.label, e.target.value)}
               value={formData[field.label] || ""}
             >
-              <option value="">Selecciona una opción</option>
-              <option value="Producer">Producer</option>
-              <option value="Marketing">Marketing</option>
-              <option value="Fotógrafx">Fotógrafx</option>
-              <option value="CEO">CEO</option>
-              <option value="Otros">Otros</option>
+              <option value="">{field.label}</option>
+              {field.options.map((option, optIndex) => (
+                <option key={optIndex} value={option}>
+                  {option}
+                </option>
+              ))}
             </select>
             <div className={styles.dropdownIcon}>
               <Image

@@ -25,7 +25,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-inline: 25px;
+  padding-inline: 20px;
   padding-block: 10px;
 
   img {
@@ -66,7 +66,7 @@
 
 .clientTypeStep,
 .clientFormStep {
-  padding-inline: 25px;
+  padding-inline: 20px;
   padding-block-start: 4px;
   display: flex;
   flex-direction: column;
@@ -116,7 +116,8 @@
     border: 1px solid #e2d5b9;
     border-radius: 50px;
     outline: none;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
+    transition: border-color 0.3s ease, background-color 0.3s ease,
+      font-size 0.2s ease;
     appearance: none;
 
     &::placeholder {
@@ -163,6 +164,9 @@
     font-size: 12px;
     font-weight: 300;
     text-transform: uppercase;
+    &:focus {
+      font-size: 12px;
+    }
   }
 }
 

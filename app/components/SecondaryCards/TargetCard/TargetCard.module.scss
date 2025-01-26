@@ -131,7 +131,6 @@
 
     &:focus {
       border-color: #e2d5b9;
-      background-color: #fefcf9;
     }
   }
 
@@ -149,16 +148,16 @@
     font-weight: 300;
     color: red;
   }
+
   select {
-    background-size: 12px; 
+    background-size: 12px;
     padding-inline-start: 14px;
-    padding-block: 6px;
+    padding-block: 4px;
     cursor: pointer;
     color: rgb(94, 93, 93);
     font-size: 12px;
     font-weight: 300;
     text-transform: uppercase;
-    line-height: 9px;
   }
 }
 
@@ -200,4 +199,3 @@
     }
   }
 }
-

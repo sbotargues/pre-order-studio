@@ -1,10 +1,11 @@
-// pages/checkout.tsx
 import React, { useState } from "react";
 import { useRouter } from "next/router";
+import { useRoomState } from "../context/RoomProvider";
 
 const CheckoutPage = () => {
   const [materials, setMaterials] = useState<string[]>([]);
   const [selectedService, setSelectedService] = useState("");
+  const { formData } = useRoomState(); // Obtenemos el estado global
   const router = useRouter();
 
   const handleMaterialChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -61,6 +62,14 @@ const CheckoutPage = () => {
               <li key={material}>{material}</li>
             ))}
           </ul>
+        </div>
+
+        <div>
+          <h2>Extras</h2>
+          <p>
+            30 MIN. DE ASISTENCIA:{" "}
+            {formData.ASISTENCIA_30_MIN ? "Seleccionado" : "No seleccionado"}
+          </p>
         </div>
 
         <div>

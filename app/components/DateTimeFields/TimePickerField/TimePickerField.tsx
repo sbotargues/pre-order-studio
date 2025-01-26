@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./TimePickerField.module.scss";
-import { useRoomDispatch } from "@/app/context/RoomProvider";
+import { useRoomDispatch, useRoomState } from "@/app/context/RoomProvider";
 
 interface TimePickerFieldProps {
   selectedTime: string;
@@ -18,8 +18,9 @@ const TimePickerField = ({
   const [isTimePickerOpen, setIsTimePickerOpen] = useState(false);
   const timePickerRef = useRef<HTMLInputElement | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
-  const { updateFormData } = useRoomDispatch(); // Contexto para actualizar el estado global
-
+  const { updateFormData } = useRoomDispatch();
+  const { selectedRoomConfig } = useRoomState();
+  const backgroundColor = selectedRoomConfig?.backgroundColor || "#ccc";
   const toggleOpenTimePicker = () => {
     setIsTimePickerOpen((prev) => !prev);
   };
@@ -73,6 +74,11 @@ const TimePickerField = ({
               {hours.map((hour) => (
                 <li
                   key={hour}
+                  style={
+                    hour === currentHour
+                      ? { backgroundColor: backgroundColor }
+                      : {}
+                  }
                   className={`${styles.scrollItem} ${
                     hour === currentHour ? styles.selected : ""
                   }`}
@@ -89,6 +95,11 @@ const TimePickerField = ({
               {minutes.map((minute) => (
                 <li
                   key={minute}
+                  style={
+                    minute === currentMinute
+                      ? { backgroundColor: backgroundColor }
+                      : {}
+                  }
                   className={`${styles.scrollItem} ${
                     minute === currentMinute ? styles.selected : ""
                   }`}

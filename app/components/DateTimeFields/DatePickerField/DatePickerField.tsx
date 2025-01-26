@@ -134,6 +134,11 @@ const DatePickerField = ({
           {years.map((year) => (
             <li
               key={year}
+              style={
+                year === selectedDate.getFullYear()
+                  ? { backgroundColor: config.backgroundColor }
+                  : {}
+              }
               className={`${styles.scrollItem} ${
                 year === selectedDate.getFullYear() ? styles.selected : ""
               }`}
@@ -165,6 +170,11 @@ const DatePickerField = ({
           {MONTH_NAMES.map((month, index) => (
             <li
               key={month}
+              style={
+                index === selectedDate.getMonth()
+                  ? { backgroundColor: config.backgroundColor }
+                  : {}
+              }
               className={`${styles.scrollItem} ${
                 index === selectedDate.getMonth() ? styles.selected : ""
               }`}

@@ -6,14 +6,17 @@ import ItemCard from "@/app/components/ItemCard/ItemCard";
 import Image from "next/image";
 import ToggleButton from "@/app/components/ToggleButton/ToggleButton";
 import { useRoomDispatch } from "@/app/context/RoomProvider";
+import { PriceType } from "@/app/types/types";
 
 interface LightOption {
   title: string;
-  price: string;
+  price: number;
+  priceType?: string;
   details: string[];
   detailsTitle: string[];
   isSelected: boolean;
   image: string;
+  marginBlockStart?: string;
 }
 
 interface LightCardProps {
@@ -24,7 +27,7 @@ interface LightCardProps {
 const lightOptions: LightOption[] = [
   {
     title: "PACK PROFOTO",
-    price: "15€/h",
+    price: 15,
     detailsTitle: ["(2) Flash Profoto", "(1) Disparador Air Remote Profoto"],
     details: [
       "+2 A ESCOGER:",
@@ -39,11 +42,12 @@ const lightOptions: LightOption[] = [
       "(1) Beauty Dish White Profoto + Grid 25º + Difusor",
     ],
     isSelected: false,
-    image: "/images/flashProfoto.png",
+    image: "/images/myfuckingstudio_PROFOTO.png",
+    marginBlockStart: "-70px",
   },
   {
     title: "PACK LUZ CONTINUA",
-    price: "15€/h",
+    price: 15,
     detailsTitle: [
       "(1) Aputure Amaran 200D",
       "(1) NANLITE FORZA 500D",
@@ -58,7 +62,8 @@ const lightOptions: LightOption[] = [
       "(2) Mini Octa",
     ],
     isSelected: false,
-    image: "/images/flashProfoto.png",
+    image: "/images/myfuckingstudio_CONTINUA.png",
+    marginBlockStart: "-60px",
   },
 ];
 
@@ -129,7 +134,9 @@ const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true, id }) => {
                 image={option.image}
                 title={option.title}
                 price={option.price}
+                priceType={PriceType.Hour}
                 details={option.details}
+                marginBlockStart={option.marginBlockStart}
                 detailsTitle={option.detailsTitle}
                 isSelected={selectedOptions[option.title]}
                 onToggle={() => handleOptionToggle(option.title)}
@@ -139,10 +146,18 @@ const LightCard: React.FC<LightCardProps> = ({ isCollapsed = true, id }) => {
           <p className={styles.checkInfo}>
             30 MIN. DE ASISTENCIA Y ESQUEMA DE ILUMINACIÓN
             <ToggleButton
-              isOn={selectedOptions[lightOptions[0].title]}
-              onToggle={() => handleOptionToggle(lightOptions[0].title)}
+              isOn={selectedOptions["ASISTENCIA_30_MIN"] || false}
+              onToggle={() => {
+                const newValue = !selectedOptions["ASISTENCIA_30_MIN"];
+                setSelectedOptions((prev) => ({
+                  ...prev,
+                  ASISTENCIA_30_MIN: newValue,
+                }));
+                updateFormData("ASISTENCIA_30_MIN", newValue);
+              }}
             />
           </p>
+
           <p className={styles.aditionalInfo}>
             Asistencia de iluminación de 30 minutos ( 80€ ) orientada a
             fotógrafos y profesionales para montar y diseñar el esquema de

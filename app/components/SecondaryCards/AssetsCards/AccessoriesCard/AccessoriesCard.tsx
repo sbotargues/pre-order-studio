@@ -8,11 +8,12 @@ import { useRoomDispatch } from "@/app/context/RoomProvider";
 
 interface AccessoryOption {
   title: string;
-  price: string;
+  price: number;
   details: string[];
   detailsTitle: string[];
   isSelected: boolean;
   image: string;
+  marginBlockStart?: string;
 }
 
 interface AccessoriesCardProps {
@@ -21,36 +22,54 @@ interface AccessoriesCardProps {
 
 const accessoryOptions: AccessoryOption[] = [
   {
-    title: "PACK PROFOTO",
-    price: "15€/h",
-    detailsTitle: [],
-    details: [],
-    isSelected: false,
-    image: "/images/flashProfoto.png",
-  },
-  {
-    title: "PACK LUZ CONTINUA",
-    price: "15€/h",
-    detailsTitle: [],
-    details: [],
-    isSelected: false,
-    image: "/images/flashProfoto.png",
-  },
-  {
     title: "STEAMER",
-    price: "10€/día",
+    price: 15,
     detailsTitle: [],
     details: [],
     isSelected: false,
-    image: "/images/steamer.png",
+    image: "/images/myfuckingstudio_STEAMER.png",
+    marginBlockStart: "-70px",
   },
   {
-    title: "TRÍPODE",
-    price: "8€/día",
+    title: "BLOWER MAKITA",
+    price: 15,
     detailsTitle: [],
     details: [],
     isSelected: false,
-    image: "/images/tripod.png",
+    image: "/images/myfuckingstudio_MAKITA.png",
+    marginBlockStart: "-50px",
+  },
+  {
+    title: "MAC CON CAPTURE",
+    price: 10,
+    detailsTitle: [],
+    details: [],
+    isSelected: false,
+    image: "/images/myfuckingstudio_MAC.png",
+  },
+  {
+    title: "TETHER TOOLS",
+    price: 8,
+    detailsTitle: [],
+    details: [],
+    isSelected: false,
+    image: "/images/myfuckingstudio_TETHER.png",
+  },
+  {
+    title: "TRÍPODE CÁMARA",
+    price: 10,
+    detailsTitle: [],
+    details: [],
+    isSelected: false,
+    image: "/images/myfuckingstudio_TRIPODE.png",
+  },
+  {
+    title: "PALIO LASTOLITE 2X2",
+    price: 8,
+    detailsTitle: [],
+    details: [],
+    isSelected: false,
+    image: "/images/myfuckingstudio_PALIO.png",
   },
 ];
 
@@ -120,9 +139,14 @@ const AccessoriesCard: React.FC<AccessoriesCardProps> = ({
                 detailsTitle={option.detailsTitle}
                 isSelected={selectedOptions[option.title]}
                 onToggle={() => handleOptionToggle(option.title)}
+                marginBlockStart={option.marginBlockStart}
               />
             ))}
           </div>
+          <p className={styles.aditionalInfo}>
+            *Precios exclusivamente in-house, por dia y no por hora. I.V.A. no
+            incluído.
+          </p>
         </>
       )}
     </div>

@@ -5,14 +5,18 @@ import styles from "./ServicesCard.module.scss";
 import Image from "next/image";
 import ItemCard from "@/app/components/ItemCard/ItemCard";
 import { useRoomDispatch } from "@/app/context/RoomProvider";
+import { PriceType } from "@/app/types/types";
 
 interface ServicesOption {
   title: string;
-  price: string;
+  price: number;
+  priceType?: string;
   details: string[];
   detailsTitle: string[];
   isSelected: boolean;
   image: string;
+  marginBlockStart?: string;
+  width?: string;
 }
 
 interface ServicesCardProps {
@@ -21,20 +25,24 @@ interface ServicesCardProps {
 
 const servicesOptions: ServicesOption[] = [
   {
-    title: "PACK PROFOTO",
-    price: "15€/h",
+    title: "CÁTERING BÁSICO",
+    price: 15,
+    priceType: PriceType.PAX,
     detailsTitle: [],
     details: [],
     isSelected: false,
-    image: "/images/flashProfoto.png",
+    image: "/images/myfuckingstudio_CATERING.png",
+    width: "90%",
   },
   {
-    title: "PACK LUZ CONTINUA",
-    price: "15€/h",
+    title: "ASISTENTE FULLTIME",
+    price: 300,
+    priceType: PriceType.NormalWithExcepction,
     detailsTitle: [],
     details: [],
     isSelected: false,
-    image: "/images/flashProfoto.png",
+    image: "/images/myfuckingstudio_ASISTENTE.png",
+    width: "90%",
   },
 ];
 
@@ -89,20 +97,31 @@ const ServicesCard: React.FC<ServicesCardProps> = ({ isCollapsed = true }) => {
         )}
       </div>
       {!collapsed && (
-        <div className={styles.options}>
-          {servicesOptions.map((option) => (
-            <ItemCard
-              key={option.title}
-              image={option.image}
-              title={option.title}
-              price={option.price}
-              details={option.details}
-              detailsTitle={option.detailsTitle}
-              isSelected={selectedOptions[option.title] || false}
-              onToggle={() => handleOptionToggle(option.title)}
-            />
-          ))}
-        </div>
+        <>
+          <div className={styles.options}>
+            {servicesOptions.map((option) => (
+              <ItemCard
+                key={option.title}
+                image={option.image}
+                title={option.title}
+                price={option.price}
+                priceType={option.priceType}
+                details={option.details}
+                detailsTitle={option.detailsTitle}
+                isSelected={selectedOptions[option.title] || false}
+                onToggle={() => handleOptionToggle(option.title)}
+                width={option.width}
+              />
+            ))}
+          </div>
+          <p className={styles.aditionalInfo}>
+            *Asistente FullTime de Fotografía, iluminación y digitech. Nuestros
+            asistentes te acompañarán en todo el proceso para conseguir el mejor
+            resultado. Serán tu mano derecha y el respaldo para resolver
+            cualquier incidencia que pueda suceder. Precio: desde 300€
+            dependiendo del proyecto.
+          </p>
+        </>
       )}
     </div>
   );

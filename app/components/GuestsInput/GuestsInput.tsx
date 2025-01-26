@@ -3,12 +3,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import styles from "./GuestsInput.module.scss";
+import { useRoomState } from "@/app/context/RoomProvider";
 
 const GuestsInput = () => {
   const [numPersons, setNumPersons] = useState(1);
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const inputRef = useRef<HTMLDivElement | null>(null);
   const popoverRef = useRef<HTMLDivElement | null>(null);
+  const { selectedRoomConfig } = useRoomState();
+  const backgroundColor = selectedRoomConfig?.backgroundColor || "#ccc";
 
   const togglePopover = () => setIsPopoverOpen((prev) => !prev);
 
@@ -67,6 +70,11 @@ const GuestsInput = () => {
             {[...Array(100)].map((_, i) => (
               <li
                 key={i + 1}
+                style={
+                  i + 1 === numPersons
+                    ? { backgroundColor: backgroundColor }
+                    : {}
+                }
                 className={`${styles.scrollItem} ${
                   i + 1 === numPersons ? styles.selected : ""
                 }`}

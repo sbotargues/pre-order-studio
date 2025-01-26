@@ -4,21 +4,31 @@ import React from "react";
 import Image from "next/image";
 import styles from "./ItemCard.module.scss";
 import ToggleButton from "../ToggleButton/ToggleButton";
+import { PriceType } from "@/app/types/types";
 
 interface ItemCardProps {
   image: string;
   title: string;
-  price: string;
+  price: number;
+  priceType?: string;
+  marginBlockStart?: string;
+  width?: string;
   details: string[];
   detailsTitle: string[];
   isSelected: boolean;
   onToggle: () => void;
 }
 
+const NormalWidth = "97%";
+const NormalMargin = "-60px";
+
 const ItemCard: React.FC<ItemCardProps> = ({
   image,
   title,
   price,
+  priceType = PriceType.Normal,
+  width = NormalWidth,
+  marginBlockStart,
   details,
   detailsTitle,
   isSelected,
@@ -32,6 +42,10 @@ const ItemCard: React.FC<ItemCardProps> = ({
           alt={title}
           width={260}
           height={260}
+          style={{
+            width: width,
+            marginBlockStart: marginBlockStart ? marginBlockStart : NormalMargin,
+          }}
           className={styles.image}
         />
 
@@ -41,7 +55,7 @@ const ItemCard: React.FC<ItemCardProps> = ({
           </div>
           <div className={styles.separator}></div>
           <p className={styles.title}>
-            {title} <span className={styles.price}>{price}</span>
+            {title} <span className={styles.price}>{price} {priceType}</span>
           </p>
         </div>
       </div>

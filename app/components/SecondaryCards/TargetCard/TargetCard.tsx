@@ -82,7 +82,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
 
     const lightCard = document.getElementById("light-card");
     if (lightCard) {
-      const yOffset = -500; // Ajusta el margen superior (en píxeles)
+      const yOffset = -500;
       const yPosition =
         lightCard.getBoundingClientRect().top + window.pageYOffset + yOffset;
 

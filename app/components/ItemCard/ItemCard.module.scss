@@ -16,9 +16,10 @@
     position: relative;
     aspect-ratio: 1;
 
-    &:hover {
-      transform: translateY(-5px);
-    }
+    //efecto targeta levantar un poco
+    // &:hover {
+    //   transform: translateY(-5px);
+    // }
   }
 
   .separator {
@@ -33,9 +34,7 @@
 
   .image {
     object-fit: contain;
-    width: 90%;
     position: absolute;
-    margin-block: -40px 0;
     margin-inline: 0 -42px;
   }
 

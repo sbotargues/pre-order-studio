@@ -109,10 +109,10 @@
   select {
     width: 100%;
     padding: 4px 14px;
-    font-size: 16px;
+    font-size: 12px;
     font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
     font-weight: 300;
-    color: $color-text;
+    color: rgb(94, 93, 93);
     border: 1px solid #e2d5b9;
     border-radius: 50px;
     outline: none;
@@ -131,6 +131,7 @@
 
     &:focus {
       border-color: #e2d5b9;
+      font-size: 16px;
     }
   }
 
@@ -155,7 +156,7 @@
     padding-block: 4px;
     cursor: pointer;
     color: rgb(94, 93, 93);
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 300;
     text-transform: uppercase;
   }

@@ -72,16 +72,17 @@ const TargetCard: React.FC<TargetCardProps> = ({
   }, [propCollapsed]);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Prevenir el zoom en gestos en iOS
-      const preventGestureZoom = (e: Event) => e.preventDefault();
-      document.addEventListener("gesturestart", preventGestureZoom);
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.target instanceof HTMLInputElement) {
+        e.preventDefault(); // Desactiva el zoom táctil
+      }
+    };
 
-      // Limpieza para evitar listeners duplicados
-      return () => {
-        document.removeEventListener("gesturestart", preventGestureZoom);
-      };
-    }
+    document.addEventListener("touchstart", handleTouchStart);
+
+    return () => {
+      document.removeEventListener("touchstart", handleTouchStart);
+    };
   }, []);
 
   useEffect(() => {
@@ -276,7 +277,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
                 style={{ backgroundColor: config?.backgroundColor }}
                 onClick={handleContinue}
               >
-                Continuar UPDATE_5
+                Continuar UPDATE_6
               </button>
             </div>
           )}

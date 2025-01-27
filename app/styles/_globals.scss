@@ -15,7 +15,10 @@ body {
   color: $color-text;
   background-color: $color-background;
   line-height: 1.6;
-  font-family: 'Akzidenz Grotesk Pro', sans-serif;
+  font-family: "Akzidenz Grotesk Pro", sans-serif;
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 p {

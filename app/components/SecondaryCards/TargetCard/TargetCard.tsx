@@ -241,6 +241,22 @@ const TargetCard: React.FC<TargetCardProps> = ({
           ) : (
             <div className={styles.clientFormStep}>
               <form className={styles.clientForm}>{renderFields()}</form>
+              <p className={styles.aditionalInfo}>
+                Tranqui, no vamos a vender tus datos para que te llamen a la
+                hora de la siesta, es para poder enviarte el resumen del pedido
+                y ponernos en contacto para confirmar la reserva.
+              </p>
+              <div className={styles.clientForm}>
+                <input
+                  type="text"
+                  placeholder="¿Tienes un código promocional?"
+                  value={formData["Código promocional"] || ""}
+                  className={styles.input}
+                  onChange={(e) =>
+                    handleInputChange("Código promocional", e.target.value)
+                  }
+                />
+              </div>
               <button
                 ref={continueButtonRef}
                 className={styles.continueButton}

@@ -155,7 +155,6 @@
   }
 
   select {
-    background-size: 12px;
     background-color: white;
     padding-inline-start: 14px;
     padding-block: 4px;
@@ -204,3 +203,16 @@
     }
   }
 }
+
+.aditionalInfo {
+  text-transform: uppercase;
+  font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
+  line-height: 9px;
+  font-size: 7px;
+  font-weight: 300;
+  color: #000;
+  margin-block: 0 -10px;
+  padding-inline: 2px;
+  text-align: justify;
+}
+

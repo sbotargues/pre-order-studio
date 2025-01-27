@@ -72,6 +72,19 @@ const TargetCard: React.FC<TargetCardProps> = ({
   }, [propCollapsed]);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      // Prevenir el zoom en gestos en iOS
+      const preventGestureZoom = (e: Event) => e.preventDefault();
+      document.addEventListener("gesturestart", preventGestureZoom);
+
+      // Limpieza para evitar listeners duplicados
+      return () => {
+        document.removeEventListener("gesturestart", preventGestureZoom);
+      };
+    }
+  }, []);
+
+  useEffect(() => {
     if (!isCollapsed && step === 1 && cardRef.current) {
       cardRef.current.scrollIntoView({
         behavior: "smooth",
@@ -263,7 +276,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
                 style={{ backgroundColor: config?.backgroundColor }}
                 onClick={handleContinue}
               >
-                Continuar UPDATE_3
+                Continuar UPDATE_4
               </button>
             </div>
           )}

@@ -263,7 +263,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
                 style={{ backgroundColor: config?.backgroundColor }}
                 onClick={handleContinue}
               >
-                Continuar UPDATE_1
+                Continuar UPDATE_2
               </button>
             </div>
           )}

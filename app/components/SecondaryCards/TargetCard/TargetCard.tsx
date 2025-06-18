@@ -1,9 +1,10 @@
-"use client";
+"use client"
 
-import React, { useState, useEffect, useRef } from "react";
-import styles from "./TargetCard.module.scss";
-import { useRoomDispatch, useRoomState } from "@/app/context/RoomProvider";
-import Image from "next/image";
+import type React from "react"
+import { useState, useEffect, useRef } from "react"
+import styles from "./TargetCard.module.scss"
+import { useRoomDispatch, useRoomState } from "@/app/context/RoomProvider"
+import Image from "next/image"
 
 export enum CLIENT_TYPES {
   SOY_MARCA = "SOY UNA MARCA",
@@ -16,14 +17,11 @@ export enum CLIENT_TYPES {
 }
 
 interface TargetCardProps {
-  isCollapsed?: boolean;
-  config?: any;
+  isCollapsed?: boolean
+  config?: any
 }
 
-const CLIENT_FIELDS: Record<
-  string,
-  { label: string; type: string; options?: string[]; optionsTitle?: string }[]
-> = {
+const CLIENT_FIELDS: Record<string, { label: string; type: string; options?: string[]; optionsTitle?: string }[]> = {
   [CLIENT_TYPES.SOY_MARCA]: [
     { label: "NOMBRE DE LA PERSONA DE CONTACTO*", type: "text" },
     {
@@ -111,118 +109,112 @@ const CLIENT_FIELDS: Record<
     { label: "CORREO ELECTRÓNICO*", type: "email" },
     { label: "TELÉFONO*", type: "tel" },
   ],
-};
+}
 
-const TargetCard: React.FC<TargetCardProps> = ({
-  isCollapsed: propCollapsed,
-  config,
-}) => {
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const [step, setStep] = useState(0);
-  const [errors, setErrors] = useState<Record<string, string>>({});
-  const { formData } = useRoomState();
-  const { updateFormData, setCurrentStep } = useRoomDispatch();
+const TargetCard: React.FC<TargetCardProps> = ({ isCollapsed: propCollapsed, config }) => {
+  const [isCollapsed, setIsCollapsed] = useState(false)
+  const [step, setStep] = useState(0)
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const { formData } = useRoomState()
+  const { updateFormData, setCurrentStep } = useRoomDispatch()
 
-  const cardRef = useRef<HTMLDivElement>(null);
-  const continueButtonRef = useRef<HTMLButtonElement>(null);
+  const cardRef = useRef<HTMLDivElement>(null)
+  const continueButtonRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     if (typeof propCollapsed === "boolean") {
-      setIsCollapsed(propCollapsed);
+      setIsCollapsed(propCollapsed)
     }
-  }, [propCollapsed]);
+  }, [propCollapsed])
 
   useEffect(() => {
     const handleTouchStart = (e: TouchEvent) => {
       if (e.target instanceof HTMLInputElement) {
-        e.preventDefault(); // Desactiva el zoom táctil
+        e.preventDefault() // Desactiva el zoom táctil
       }
-    };
+    }
 
-    document.addEventListener("touchstart", handleTouchStart);
+    document.addEventListener("touchstart", handleTouchStart)
 
     return () => {
-      document.removeEventListener("touchstart", handleTouchStart);
-    };
-  }, []);
+      document.removeEventListener("touchstart", handleTouchStart)
+    }
+  }, [])
 
   useEffect(() => {
     if (!isCollapsed && step === 1 && cardRef.current) {
       cardRef.current.scrollIntoView({
         behavior: "smooth",
         block: "center",
-      });
+      })
     }
-  }, [isCollapsed, step]);
+  }, [isCollapsed, step])
 
-  const validateEmail = (email: string) =>
-    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 
-  const validatePhone = (phone: string) => /^[0-9]{9,15}$/.test(phone);
+  const validatePhone = (phone: string) => /^[0-9]{9,15}$/.test(phone)
 
   const validateFields = () => {
-    const currentClientType = formData.clientType;
-    const fields = CLIENT_FIELDS[currentClientType] || [];
-    const newErrors: Record<string, string> = {};
+    const currentClientType = formData.clientType
+    const fields = CLIENT_FIELDS[currentClientType] || []
+    const newErrors: Record<string, string> = {}
 
     fields.forEach((field) => {
-      const value = formData[field.label]?.trim();
+      const value = formData[field.label]?.trim()
       if (!value) {
-        newErrors[field.label] = `El campo "${field.label}" es obligatorio.`;
+        newErrors[field.label] = `El campo "${field.label}" es obligatorio.`
       } else if (field.type === "email" && !validateEmail(value)) {
-        newErrors[field.label] = "El correo electrónico no es válido.";
+        newErrors[field.label] = "El correo electrónico no es válido."
       } else if (field.type === "tel" && !validatePhone(value)) {
-        newErrors[field.label] = "El teléfono debe tener entre 9 y 15 dígitos.";
+        newErrors[field.label] = "El teléfono debe tener entre 9 y 15 dígitos."
       }
-    });
+    })
 
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
-  };
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
 
   const handleClientTypeClick = (type: string) => {
-    updateFormData("clientType", type);
-    setStep(1);
-  };
+    updateFormData("clientType", type)
+    setStep(1)
+  }
 
   const handleToggleCollapse = () => {
-    setIsCollapsed((prev) => !prev);
-  };
+    setIsCollapsed((prev) => !prev)
+  }
 
   const handleInputChange = (field: string, value: string) => {
-    updateFormData(field, value);
+    updateFormData(field, value)
 
     if (errors[field]) {
-      setErrors((prev) => ({ ...prev, [field]: "" }));
+      setErrors((prev) => ({ ...prev, [field]: "" }))
     }
-  };
+  }
 
   const handleContinue = () => {
-    if (!validateFields()) return;
+    if (!validateFields()) return
 
     if (cardRef.current) {
       cardRef.current.scrollIntoView({
         behavior: "smooth",
         block: "center",
-      });
+      })
     }
 
-    setIsCollapsed(true);
-    setCurrentStep(2);
-  };
+    setIsCollapsed(true)
+    setCurrentStep(2)
+  }
 
   const renderFields = () => {
-    const currentClientType = formData.clientType;
-    const fields = CLIENT_FIELDS[currentClientType] || [];
+    const currentClientType = formData.clientType
+    const fields = CLIENT_FIELDS[currentClientType] || []
 
     return fields.map((field, index) => (
       <div key={index} className={styles.fieldWrapper}>
         {field.type === "dropdown" && field.options ? (
           <div className={styles.dropdownWrapper}>
             <select
-              className={`${styles.input} ${
-                errors[field.label] ? styles.errorInput : ""
-              }`}
+              className={`${errors[field.label] ? styles.errorInput : ""}`}
               onChange={(e) => handleInputChange(field.label, e.target.value)}
               value={formData[field.label] || ""}
             >
@@ -234,13 +226,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
               ))}
             </select>
             <div className={styles.dropdownIcon}>
-              <Image
-                src="/icons/up.png"
-                alt="Dropdown Icon"
-                width={10}
-                height={10}
-                className={styles.icon}
-              />
+              <Image src="/icons/up.png" alt="Dropdown Icon" width={10} height={10} className={styles.icon} />
             </div>
           </div>
         ) : (
@@ -248,38 +234,34 @@ const TargetCard: React.FC<TargetCardProps> = ({
             type={field.type}
             placeholder={field.label}
             value={formData[field.label] || ""}
-            className={`${styles.input} ${
-              errors[field.label] ? styles.errorInput : ""
-            }`}
+            className={errors[field.label] ? styles.errorInput : ""}
             onChange={(e) => handleInputChange(field.label, e.target.value)}
           />
         )}
-        {errors[field.label] && (
-          <span className={styles.errorText}>{errors[field.label]}</span>
-        )}
+        {errors[field.label] && <span className={styles.errorText}>{errors[field.label]}</span>}
       </div>
-    ));
-  };
+    ))
+  }
+
+  const handleBackClick = (e: React.MouseEvent) => {
+    e.stopPropagation() // Prevent the header click from firing
+    setStep(0)
+  }
 
   return (
-    <div
-      ref={cardRef}
-      className={`${styles.card} ${
-        isCollapsed ? styles.collapsed : styles.uncollapsed
-      }`}
-    >
-      <div className={styles.headerRow} onClick={handleToggleCollapse}>
+    <div ref={cardRef} className={`${styles.card} ${isCollapsed ? styles.collapsed : styles.uncollapsed}`}>
+      <div className={styles.headerRow}>
         {step > 0 && (
           <Image
             src="/icons/up.png"
             alt="down"
             width={11}
             height={11}
-            onClick={() => setStep(0)}
+            onClick={handleBackClick}
             className={styles.backButton}
           />
         )}
-        <h3>
+        <h3 onClick={handleToggleCollapse}>
           {isCollapsed || formData.clientType
             ? formData.clientType || "Vale, pero... ¿Quién eres?*"
             : "Vale, pero... ¿Quién eres?*"}
@@ -290,6 +272,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
           alt={isCollapsed ? "Expandir" : "Colapsar"}
           width={11}
           height={11}
+          onClick={handleToggleCollapse}
         />
       </div>
       {!isCollapsed && (
@@ -300,15 +283,11 @@ const TargetCard: React.FC<TargetCardProps> = ({
                 {Object.values(CLIENT_TYPES).map((type) => (
                   <div
                     key={type}
-                    className={`${styles.clientTypeItem} ${
-                      formData.clientType === type ? styles.active : ""
-                    }`}
+                    className={`${styles.clientTypeItem} ${formData.clientType === type ? styles.active : ""}`}
                     onClick={() => handleClientTypeClick(type)}
                   >
                     {type}
-                    {type !== CLIENT_TYPES.OTROS && (
-                      <div className={styles.linea}></div>
-                    )}
+                    {type !== CLIENT_TYPES.OTROS && <div className={styles.linea}></div>}
                   </div>
                 ))}
               </div>
@@ -317,19 +296,15 @@ const TargetCard: React.FC<TargetCardProps> = ({
             <div className={styles.clientFormStep}>
               <form className={styles.clientForm}>{renderFields()}</form>
               <p className={styles.aditionalInfo}>
-                Tranqui, no vamos a vender tus datos para que te llamen a la
-                hora de la siesta, es para poder enviarte el resumen del pedido
-                y ponernos en contacto para confirmar la reserva.
+                Tranqui, no vamos a vender tus datos para que te llamen a la hora de la siesta, es para poder enviarte
+                el resumen del pedido y ponernos en contacto para confirmar la reserva.
               </p>
               <div className={styles.clientForm}>
                 <input
                   type="text"
                   placeholder="¿Tienes un código promocional?"
                   value={formData["Código promocional"] || ""}
-                  className={styles.input}
-                  onChange={(e) =>
-                    handleInputChange("Código promocional", e.target.value)
-                  }
+                  onChange={(e) => handleInputChange("Código promocional", e.target.value)}
                 />
               </div>
               <button
@@ -345,7 +320,7 @@ const TargetCard: React.FC<TargetCardProps> = ({
         </>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default TargetCard;
+export default TargetCard

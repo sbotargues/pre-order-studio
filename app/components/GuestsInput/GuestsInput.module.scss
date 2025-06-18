@@ -5,11 +5,11 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
 
-  label {
-    font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
-    font-size: 15px;
-  }
+.guests label {
+  font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
+  font-size: 15px;
 }
 
 .guestsInput {
@@ -22,12 +22,10 @@
   cursor: pointer;
   background-color: #f5efe2;
   display: inline-block;
-
-  /* Ajuste dinámico del ancho basado en el contenido */
   width: auto;
   min-width: fit-content;
-  max-width: 100%; /* Asegura que no crezca indefinidamente */
-  white-space: nowrap; /* Evita que el texto se corte en líneas */
+  max-width: 100%;
+  white-space: nowrap;
 }
 
 .popover {
@@ -38,6 +36,17 @@
   padding: 1rem;
   text-align: center;
   border: 1px solid #e2d5b9;
+}
+
+.suggestionPopover {
+  position: absolute;
+  z-index: 1000;
+  background: #fff;
+  border-radius: 24px;
+  padding: 1.5rem;
+  text-align: center;
+  border: 1px solid #e2d5b9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .triangle {
@@ -57,6 +66,14 @@
   max-height: 200px;
   overflow-y: auto;
   text-align: center;
+  /* Ocultar barra de scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+/* Ocultar barra de scroll en WebKit browsers (Chrome, Safari, Edge) */
+.scrollList::-webkit-scrollbar {
+  display: none;
 }
 
 .scrollItem {
@@ -70,4 +87,61 @@
 .scrollItem:hover,
 .selected {
   color: black;
+}
+
+.overLimit {
+  background-color: #fff3cd;
+  color: #856404;
+  font-style: italic;
+}
+
+.overLimit:hover {
+  background-color: #ffeaa7;
+}
+
+.suggestionContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.suggestionTitle {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  color: #333;
+}
+
+.suggestionButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.suggestionButton {
+  padding: 8px 16px;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  background: white;
+  cursor: pointer;
+  font-size: 12px;
+  transition: all 0.2s ease;
+}
+
+.suggestionButton:hover {
+  background-color: #f5f5f5;
+}
+
+.suggestionItem {
+  background-color: #f0f8ff;
+  color: #0066cc;
+  font-style: italic;
+  border-top: 1px solid #e0e0e0;
+  margin-top: 4px;
+  padding-top: 8px;
+}
+
+.suggestionItem:hover {
+  background-color: #e6f3ff;
+  color: #004499;
 }

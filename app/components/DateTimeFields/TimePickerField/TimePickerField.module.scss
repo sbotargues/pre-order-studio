@@ -8,11 +8,11 @@
   text-align: center;
   cursor: pointer;
   background-color: #f5efe2;
+}
 
-  &:hover,
-  &:focus {
-    outline: none;
-  }
+.timepicker:hover,
+.timepicker:focus {
+  outline: none;
 }
 
 .timePickerPopover {
@@ -41,6 +41,14 @@
 .scrollContainer {
   max-height: 120px;
   overflow-y: auto;
+  /* Ocultar barra de scroll */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+/* Ocultar barra de scroll en WebKit browsers (Chrome, Safari, Edge) */
+.scrollContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .scrollList {
@@ -60,6 +68,15 @@
 .selected {
   color: black;
   border-radius: 8px;
+}
+
+.nightRate {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.nightRate:hover {
+  background-color: #ffeaa7;
 }
 
 .separator {

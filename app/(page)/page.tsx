@@ -74,11 +74,11 @@ const IndexPage = () => {
   const renderStep = () => {
     return (
       <>
+        <AssetsCards isCollapsed={currentStep !== 2} />
         <TargetCard
           isCollapsed={currentStep <= 2}
           config={selectedRoomConfig}
         />
-        <AssetsCards isCollapsed={currentStep !== 2} />
       </>
     );
   };

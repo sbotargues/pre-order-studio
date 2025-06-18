@@ -12,18 +12,29 @@
   align-items: center;
   width: 100%;
   justify-content: space-between;
+}
 
-  label {
-    font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
-    font-weight: 300;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-size: 15px;
-  }
+.field label {
+  font-family: "Akzidenz Grotesk Pro Exp", sans-serif;
+  font-weight: 300;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 15px;
 }
 
 .inputGroup {
   display: flex;
   gap: 8px;
+}
+
+.nightRateWarning {
+  background-color: #fff3cd;
+  border: 1px solid #ffeaa7;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: #856404;
+  margin-top: 8px;
+  text-align: center;
 }

@@ -8,6 +8,10 @@
   align-content: center;
   gap: 14px;
   bottom: 0;
+  @media (min-width: 600px) {
+    max-width: 600px;
+    margin: 0 auto;
+  }
 
   p {
     font-size: 14px;
